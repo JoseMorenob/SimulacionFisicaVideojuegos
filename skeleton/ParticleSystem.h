@@ -8,6 +8,7 @@
 #include "Firework.h"
 #include "UniformParticleGenerator.h"
 #include "GaussianParticleGenerator.h"
+#include "MiniFirework_Generator.h"
 class ParticleSystem
 {
 public:
@@ -27,6 +28,7 @@ protected:
 	GaussianParticleGenerator* _firework_generator; // This 
 	UniformParticleGenerator* g2;
 	GaussianParticleGenerator* g3;
+	MiniFirework_Generator* fire;
 //	generator is only to shoot the firework!!
 	Vector3 _gravity;
 	std::vector<Firework*> _firework_pool; // Fireworks to 

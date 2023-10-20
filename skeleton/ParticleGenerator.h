@@ -24,10 +24,10 @@ public:
 	//and mean positions and velocities
 		inline void setParticle(Particle* p, bool modify_pos_vel =
 			true) {
-		delete _model_particle;
-		//_model_particle = p->clone();
+		delete (_model_particle);
+		_model_particle = p->clone();
 		if (modify_pos_vel) {
-			//_origin = p->_pose.p;
+			_origin = p->GetPos();
 			_mean_velocity = p->getVel();
 		}
 		_model_particle->setPos({ -1000.0f, -1000.0f, -1000.0f });

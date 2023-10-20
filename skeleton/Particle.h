@@ -19,10 +19,12 @@ public:
 	inline float getDuration()const {
 		return duration;
 	}
+	
 	inline void setDuration(float d) {
 		duration = d;
 	}
-	// virtual Particle* clone() const;
+	 virtual Particle* clone() const;
+	 ~Particle();
 	   // Type
 	unsigned _type;
 
@@ -35,5 +37,6 @@ protected:
 	Vector3 vel;
 	physx::PxTransform posicion;
 	RenderItem* renderItem;// desregistrar el objeto
+	Vector4 color;
 };
 

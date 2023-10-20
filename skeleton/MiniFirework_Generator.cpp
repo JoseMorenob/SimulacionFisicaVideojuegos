@@ -1,18 +1,10 @@
-#include "UniformParticleGenerator.h"
-#include <random>
-
-double UniformParticleGenerator::generateUniformValue(double range) {
-    static std::random_device rd;
-    static std::mt19937 generator(rd());
-    std::uniform_real_distribution<double> distribution(-range / 2, range / 2);
-
-    return distribution(generator);
-}
-
-std::list<Particle*> UniformParticleGenerator::generateParticles() {
+#include "MiniFirework_Generator.h"
+#include "Firework.h"
+#include "ParticleGenerator.h"
+std::list<Particle*> MiniFirework_Generator::generateParticles() {
     std::list<Particle*> particles;
 
-    for (int i = 0; i < _n_particles; i++) {
+    for (int i = 0; i < _n_particles/2; i++) {
         double x = _origin.x + generateUniformValue(pos_width.x);
         double y = _origin.y + generateUniformValue(pos_width.y);
         double z = _origin.z + generateUniformValue(pos_width.z);
@@ -24,10 +16,16 @@ std::list<Particle*> UniformParticleGenerator::generateParticles() {
         Vector3 position(x, y, z);
         Vector3 velocity(velX, velY, velZ);
 
-        Particle* newParticle = new Particle(position, velocity, gravity, 2, Vector4{ 0.6 , 0.1 , 0.4, 1 }, 0);
+        Firework* newParticle = new Firework(position, velocity, gravity, 2, Vector4{ 0.3 , 0.3 , 0.4, 1 }, 2);
+        newParticle->setDuration(0.5);
+        newParticle->setTimer(0);
+        newParticle->addGenerator(g);
         particles.push_back(newParticle);
     }
-   
+
 
     return particles;
+}
+void MiniFirework_Generator::setgenerator(ParticleGenerator* g) {
+    this->g = g;
 }

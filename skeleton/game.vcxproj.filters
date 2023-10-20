@@ -25,6 +25,9 @@
     <ClCompile Include="UniformParticleGenerator.cpp">
       <Filter>p2</Filter>
     </ClCompile>
+    <ClCompile Include="MiniFirework_Generator.cpp">
+      <Filter>p2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -51,6 +54,9 @@
       <Filter>p2</Filter>
     </ClInclude>
     <ClInclude Include="UniformParticleGenerator.h">
+      <Filter>p2</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniFirework_Generator.h">
       <Filter>p2</Filter>
     </ClInclude>
   </ItemGroup>
