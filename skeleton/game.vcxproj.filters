@@ -8,9 +8,23 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="RenderUtils.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
-    <ClCompile Include="Particula.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp" />
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>p2</Filter>
+    </ClCompile>
+    <ClCompile Include="Generador.cpp" />
+    <ClCompile Include="GaussianParticleGenerator.cpp">
+      <Filter>p2</Filter>
+    </ClCompile>
+    <ClCompile Include="Firework.cpp">
+      <Filter>p2</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformParticleGenerator.cpp">
+      <Filter>p2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -22,11 +36,30 @@
     </ClInclude>
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
-    <ClInclude Include="Particula.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>p2</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleGenerator.h">
+      <Filter>p2</Filter>
+    </ClInclude>
+    <ClInclude Include="Firework.h">
+      <Filter>p2</Filter>
+    </ClInclude>
+    <ClInclude Include="Generador.h" />
+    <ClInclude Include="GaussianParticleGenerator.h">
+      <Filter>p2</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformParticleGenerator.h">
+      <Filter>p2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="p2">
+      <UniqueIdentifier>{9ee87492-1058-4100-b47e-37a942a27df6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

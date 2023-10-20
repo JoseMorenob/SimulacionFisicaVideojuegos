@@ -1,4 +1,4 @@
-ï»¿#include <ctype.h>
+#include <ctype.h>
 
 #include <PxPhysicsAPI.h>
 
@@ -7,11 +7,12 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-#include "Particula.h"
+#include "Particle.h"
 #include <iostream>
 #include <list>
+#include "ParticleSystem.h"
 
-std::string display_text = "This is a test";
+std::string display_text = "Mateme";
 
 
 using namespace physx;
@@ -19,18 +20,20 @@ using namespace physx;
 PxDefaultAllocator		gAllocator;
 PxDefaultErrorCallback	gErrorCallback;
 
-PxFoundation* gFoundation = NULL;
-PxPhysics* gPhysics = NULL;
+PxFoundation*			gFoundation = NULL;
+PxPhysics*				gPhysics	= NULL;
 
 
-PxMaterial* gMaterial = NULL;
+PxMaterial*				gMaterial	= NULL;
 
-PxPvd* gPvd = NULL;
+PxPvd*                  gPvd        = NULL;
 
-PxDefaultCpuDispatcher* gDispatcher = NULL;
-PxScene* gScene = NULL;
+PxDefaultCpuDispatcher*	gDispatcher = NULL;
+PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 std::list<Particle*>particulas;
+ParticleSystem* p=nullptr;
+ParticleSystem* p2 = nullptr;
 using namespace std;
 //std::vector<Particle*> particulas;
 // Initialize physics engine
@@ -42,9 +45,9 @@ void initPhysics(bool interactive)
 
 	gPvd = PxCreatePvd(*gFoundation);
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
-	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
+	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
 
-	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
+	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
@@ -57,7 +60,9 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-}
+	p = new ParticleSystem();
+
+	}
 
 
 // Function to configure what happens in each step of physics
@@ -69,14 +74,16 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	list<Particle*>::iterator e = particulas.begin();
+	/*list<Particle*>::iterator e = particulas.begin();
 	while (e != particulas.end()) {
 		auto aux = e;
 		++aux;
-		if ((*e)->gettimer() <= 3)(*e)->integrate(t);
+		if((*e)->gettimer() <= 3)(*e)->integrate(t);
 		else { delete* e; particulas.remove(*e); }
 		e = aux;
-	}
+	}*/
+	if(p!=nullptr)p->update(t);
+	if (p2 != nullptr)p2->update(t);
 }
 
 // Function to clean data
@@ -89,30 +96,40 @@ void cleanupPhysics(bool interactive)
 	gScene->release();
 	gDispatcher->release();
 	// -----------------------------------------------------
-	gPhysics->release();
+	gPhysics->release();	
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-
+	
 	gFoundation->release();
-}
+	delete(p);
+	}
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
-	switch (toupper(key))
+	switch(toupper(key))
 	{
 	case 'T': {
-		//creacion de una partï¿½cula
-		Particle* p = new Particle(GetCamera()->getEye(), GetCamera()->getDir() * 45, Vector3(0, -9.8, 0), 4, Vector4{ 200 , 100, 100, 1 });
-		particulas.push_back(p);
-
+		p->generateFirework(2);
 		break;
 	}
-	case ' ':
+	case 'F': {
+		//creacion de una partícula
+	/*	Particle* p = new Particle(GetCamera()->getEye(), GetCamera()->getDir()*30, Vector3(0, -3.8, 0), 2, Vector4{ 250 , 150, 150, 1 });
+		particulas.push_back(p);
+
+		break;*/
+
+		p->generateFirework(1);
+		break;
+	}
+
+	case 'R':
 	{
+		p->generateFirework(3);
 		break;
 	}
 	default:
@@ -127,7 +144,7 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 }
 
 
-int main(int, const char* const*)
+int main(int, const char*const*)
 {
 #ifndef OFFLINE_EXECUTION 
 	extern void renderLoop();
@@ -135,7 +152,7 @@ int main(int, const char* const*)
 #else
 	static const PxU32 frameCount = 100;
 	initPhysics(false);
-	for (PxU32 i = 0; i < frameCount; i++)
+	for(PxU32 i=0; i<frameCount; i++)
 		stepPhysics(false);
 	cleanupPhysics(false);
 #endif
