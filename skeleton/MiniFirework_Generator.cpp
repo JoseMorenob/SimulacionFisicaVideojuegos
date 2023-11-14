@@ -17,7 +17,7 @@ std::list<Particle*> MiniFirework_Generator::generateParticles() {
         Vector3 velocity(velX, velY, velZ);
 
         Firework* newParticle = new Firework(position, velocity, gravity, 2, Vector4{ 0.3 , 0.3 , 0.4, 1 }, 2);
-        newParticle->setDuration(0.5);
+        newParticle->setDuration(4);
         newParticle->setTimer(0);
         newParticle->addGenerator(g);
         particles.push_back(newParticle);

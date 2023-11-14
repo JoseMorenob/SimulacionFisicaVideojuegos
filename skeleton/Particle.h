@@ -8,7 +8,7 @@ class Particle
 {
 public:
 	Particle(Vector3 Pos, Vector3 Vel,Vector3 aceler, int mas,Vector4 color,int c);
-	void integrate(float t);
+	bool integrate(float t);
 	float gettimer();
 	inline void setTimer(float t) { timer = t; };
 	inline void setVel(Vector3 v) { vel = v; };
@@ -23,13 +23,15 @@ public:
 	inline void setDuration(float d) {
 		duration = d;
 	}
+	inline float getMasa()const { return masa; }
 	 virtual Particle* clone() const;
 	 ~Particle();
 	   // Type
 	unsigned _type;
-
+	// Add force to apply in next integration only
+	void addForce(const Vector3& f);
 protected:
-	float duration = 2.0f;
+	float duration = 5.0f;
 	bool cuehete;
 	float timer=0;
 	int masa;
@@ -38,5 +40,11 @@ protected:
 	physx::PxTransform posicion;
 	RenderItem* renderItem;// desregistrar el objeto
 	Vector4 color;
+	//Accumulated force
+	Vector3 force;
+	// Clears accumulated force
+	void clearForce();
+
+
 };
 

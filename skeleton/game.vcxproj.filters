@@ -11,7 +11,6 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>p2</Filter>
     </ClCompile>
@@ -27,6 +26,15 @@
     </ClCompile>
     <ClCompile Include="MiniFirework_Generator.cpp">
       <Filter>p2</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityForceGenerator.cpp">
+      <Filter>P3</Filter>
+    </ClCompile>
+    <ClCompile Include="WindForceGenerator.cpp">
+      <Filter>P3</Filter>
+    </ClCompile>
+    <ClCompile Include="DragForceGenerator.cpp">
+      <Filter>P3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +67,21 @@
     <ClInclude Include="MiniFirework_Generator.h">
       <Filter>p2</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>P3</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerator.h">
+      <Filter>P3</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityForceGenerator.h">
+      <Filter>P3</Filter>
+    </ClInclude>
+    <ClInclude Include="WindForceGenerator.h">
+      <Filter>P3</Filter>
+    </ClInclude>
+    <ClInclude Include="DragForceGenerator.h">
+      <Filter>P3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -66,6 +89,9 @@
     </Filter>
     <Filter Include="p2">
       <UniqueIdentifier>{9ee87492-1058-4100-b47e-37a942a27df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="P3">
+      <UniqueIdentifier>{27c07032-61eb-4312-8d12-777ebd100cb5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

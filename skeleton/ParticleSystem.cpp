@@ -3,6 +3,13 @@
 ParticleSystem::ParticleSystem(const Vector3& g ) {
 	_gravity = g;
 	createFireworkSystem();
+	Vector3 g2(0, -9.8, 0);
+	gr = new GravityForceGenerator(g2);
+	force_registry = new ParticleForceRegistry();
+	fg.push_back(gr);
+	g2 = Vector3(0, -0.8, 0);
+	fg.push_back(new GravityForceGenerator(g2));
+	wf = new WindForceGenerator(Vector3(30,0,0),Vector3(-70,-60,-60),Vector3(50,50,50),0.8,0);
 	//_firework_generator = new ParticleGenerator();
 }
 ParticleSystem::~ParticleSystem() {
@@ -16,53 +23,64 @@ ParticleSystem::~ParticleSystem() {
 		delete* it;
 	}
 	_particle_generators.clear();
+	delete(force_registry);
 }
 void ParticleSystem::update(double t) {
 	auto c = _particles.begin();
+	force_registry->updateForces(t);
 	while (c != _particles.end()) {
 		auto v = c;
 		++c;
-		(*v)->integrate(t);
+		bool finish=(*v)->integrate(t);
 		//std::cout << (*v)->gettimer() << "\n";
 		
-			if ((*v)->_type>0 && (*v)->gettimer()>(*v)->getDuration()) {
+			if ((*v)->_type>0 && finish) {
 				Firework* firework = static_cast<Firework*>(*v);
 				std::list<Particle*> p = firework->explode();
 				for (auto d : p) {
 					_particles.push_back(d);
+					force_registry->addRegistry(gr, d);
+					force_registry->addRegistry(wf, d);
 				}
 				onParticleDeath(*v);
 			}
-			else if( (*v)->gettimer() > (*v)->getDuration()) onParticleDeath(*v);
+			else if( finish) onParticleDeath(*v);
 		//fuera pantalla
-		 else if ((*v)->GetPos().x > 300 || (*v)->GetPos().x < -200 || (*v)->GetPos().y < -100 || (*v)->GetPos().y>200) {
+		 else if ((*v)->GetPos().x > 800 || (*v)->GetPos().x < -800 || (*v)->GetPos().y < -800 || (*v)->GetPos().y>800) {
 			onParticleDeath(*v);
 		 }
+			
 
 	}
+	
 }
 void ParticleSystem::generateFirework(unsigned firework_type) {
 	//						GetCamera()->getEye(), GetCamera()->getDir() * 30, _gravity, 2, Vector4{ 250 , 150, 150, 1 })
 
-	auto ne = new Firework(GetCamera()->getEye(), GetCamera()->getDir() * 60, _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 },firework_type);
+	auto ne = new Firework(Vector3(GetCamera()->getEye().x-50, GetCamera()->getEye().y-50, GetCamera()->getEye().z-50), Vector3(GetCamera()->getDir().x *100, GetCamera()->getDir().y*80, GetCamera()->getDir().z*(80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 },firework_type);
 	_particles.push_back(ne);
+
+
+	/*Vector3 g2(GetCamera()->getDir().x * 4, 0, GetCamera()->getDir().z * 4);
+	force_registry->addRegistry(new GravityForceGenerator(g2), ne);*/
 	switch (firework_type)
 	{
 	case 1: {
 		ne->addGenerator(_firework_generator);
-		
+		force_registry->addRegistry(fg[1], ne);
 		
 		break;
 	}
 	case 2: {
 		//ne->addGenerator(g2);
 		ne->addGenerator(fire);
-		
-		
+		force_registry->addRegistry(wf, ne);
+		force_registry->addRegistry(gr, ne);
 		break;
 	}
 	case 3:{
 		ne->addGenerator(g3);
+		force_registry->addRegistry(gr, ne);
 		break;
 	}
 

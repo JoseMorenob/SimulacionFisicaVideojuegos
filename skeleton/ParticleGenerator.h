@@ -5,6 +5,7 @@
 #include <random>
 #include "Particle.h"
 #include <list>
+
 class ParticleGenerator
 {
 public:
@@ -43,6 +44,7 @@ protected:
 	//particles
 		Particle* _model_particle = nullptr; // Has the attributes of 
 	//the particle that will be generated!(damping, lifetime, etc.)
+
 		Vector3 gravity;
 		Vector3 _origin, _mean_velocity;
 	std::mt19937 _mt;

@@ -9,6 +9,10 @@
 #include "UniformParticleGenerator.h"
 #include "GaussianParticleGenerator.h"
 #include "MiniFirework_Generator.h"
+#include "GravityForceGenerator.h"
+#include "ParticleForceRegistry.h"
+#include "ForceGenerator.h"
+#include "WindForceGenerator.h"
 class ParticleSystem
 {
 public:
@@ -21,6 +25,7 @@ public:
 	// Gets a particle generator with name...
 	ParticleGenerator* getParticleGenerator(const std::string& n);
 protected:
+	ParticleForceRegistry* force_registry;
 	std::list <Particle*> _particles;
 	std::list <ParticleGenerator*> _particle_generators; // 
 //	These are the registred generators(for on demand set
@@ -29,6 +34,9 @@ protected:
 	UniformParticleGenerator* g2;
 	GaussianParticleGenerator* g3;
 	MiniFirework_Generator* fire;
+	GravityForceGenerator* gr;
+	std::vector<ForceGenerator*> fg;
+	WindForceGenerator* wf;
 //	generator is only to shoot the firework!!
 	Vector3 _gravity;
 	std::vector<Firework*> _firework_pool; // Fireworks to 
