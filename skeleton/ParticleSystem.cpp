@@ -53,7 +53,14 @@ ParticleSystem::~ParticleSystem() {
 	}
 	_particle_generators.clear();
 	delete(force_registry);
-
+	auto d = fg.begin();
+	while (d != fg.end()) {
+		auto v = d;
+		++d;
+		delete(*v);
+		
+	}
+	fg.clear();
 }
 void ParticleSystem::explosion() {
 	for (auto d : explosion_parts) {
