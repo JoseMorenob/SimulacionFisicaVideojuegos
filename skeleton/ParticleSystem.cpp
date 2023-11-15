@@ -9,7 +9,36 @@ ParticleSystem::ParticleSystem(const Vector3& g ) {
 	fg.push_back(gr);
 	g2 = Vector3(0, -0.8, 0);
 	fg.push_back(new GravityForceGenerator(g2));
-	wf = new WindForceGenerator(Vector3(30,0,0),Vector3(-70,-60,-60),Vector3(50,50,50),0.8,0);
+
+	wf = new WindForceGenerator(Vector3(90,100,90),Vector3(-70,-60,-60),Vector3(50,50,50),3,0);
+	
+	                                  //Vector3 f, Vector3 ini_pos, Vector3 tam, const float k1, const float k2
+	tg = new TorbellinoForceGenerator({ 0.0f,0.0f,0.0f },{0,0,0},{0,0,0},1.4f,0);
+	eg = new ExplosionForceGenerator({-50,-50,-50},{90,90,90},90,0.5f);
+	Vector3 centre(-50, -50, -50);
+	fg.push_back(wf);
+	fg.push_back(tg);
+	fg.push_back(eg);
+
+	//genreamos particulas para luego la explosion
+	for (int i = 0; i < 15; ++i) {
+		// Calcular una posición aleatoria dentro del área
+		float randomRadius = (static_cast<float>(rand()) / RAND_MAX) * 50;
+		float theta = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
+		float phi = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
+
+		float x = centre.x + randomRadius * sin(theta) * cos(phi);
+		float y = centre.y + randomRadius * sin(theta) * sin(phi);
+		float z = centre.z + randomRadius * cos(theta);
+
+		// Dirección fija para mantenerse quietas
+		Vector3 direction(0.0f, 0.0f, 0.0f);
+
+		// Crear la partícula y añadirla al contenedor
+		Particle* newParticle = new Firework(Vector3(x, y, z), direction, _gravity, 2, Vector4{ 0.4f, 0.3f, 0.4f, 1.0f }, 0);
+		_particles.push_back(newParticle);
+		explosion_parts.push_back(newParticle);
+	}
 	//_firework_generator = new ParticleGenerator();
 }
 ParticleSystem::~ParticleSystem() {
@@ -24,6 +53,13 @@ ParticleSystem::~ParticleSystem() {
 	}
 	_particle_generators.clear();
 	delete(force_registry);
+
+}
+void ParticleSystem::explosion() {
+	for (auto d : explosion_parts) {
+		force_registry->addRegistry(eg, d);
+	}
+
 }
 void ParticleSystem::update(double t) {
 	auto c = _particles.begin();
@@ -68,7 +104,7 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 	case 1: {
 		ne->addGenerator(_firework_generator);
 		force_registry->addRegistry(fg[1], ne);
-		
+		force_registry->addRegistry(tg, ne);
 		break;
 	}
 	case 2: {
@@ -81,12 +117,15 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 	case 3:{
 		ne->addGenerator(g3);
 		force_registry->addRegistry(gr, ne);
+		
 		break;
 	}
 
 	default:
 		break;
 	}
+
+
 
 }
 ParticleGenerator* ParticleSystem::getParticleGenerator(const std::string& n) {

@@ -31,7 +31,7 @@ public:
 	// Add force to apply in next integration only
 	void addForce(const Vector3& f);
 protected:
-	float duration = 5.0f;
+	float duration = 95.0f;
 	bool cuehete;
 	float timer=0;
 	int masa;

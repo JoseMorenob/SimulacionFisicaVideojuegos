@@ -132,6 +132,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		p->generateFirework(3);
 		break;
 	}
+	case 'P':
+		p->explosion();
+		break;
 	default:
 		break;
 	}

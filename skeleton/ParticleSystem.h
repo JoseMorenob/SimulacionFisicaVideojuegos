@@ -13,6 +13,8 @@
 #include "ParticleForceRegistry.h"
 #include "ForceGenerator.h"
 #include "WindForceGenerator.h"
+#include "TorbellinoForceGenerator.h"
+#include "ExplosionForceGenerator.h"
 class ParticleSystem
 {
 public:
@@ -21,6 +23,7 @@ public:
 	~ParticleSystem();
 	// Integrates the particles and checks for its lifetime, 
 	void update(double t);
+	void explosion();
 	void generateFirework(unsigned firework_type);
 	// Gets a particle generator with name...
 	ParticleGenerator* getParticleGenerator(const std::string& n);
@@ -28,6 +31,7 @@ protected:
 	ParticleForceRegistry* force_registry;
 	std::list <Particle*> _particles;
 	std::list <ParticleGenerator*> _particle_generators; // 
+	std::list<Particle*> explosion_parts;
 //	These are the registred generators(for on demand set
 	//	generation prob.to 0
 	GaussianParticleGenerator* _firework_generator; // This 
@@ -35,16 +39,19 @@ protected:
 	GaussianParticleGenerator* g3;
 	MiniFirework_Generator* fire;
 	GravityForceGenerator* gr;
+	ExplosionForceGenerator* eg;
 	std::vector<ForceGenerator*> fg;
 	WindForceGenerator* wf;
 //	generator is only to shoot the firework!!
 	Vector3 _gravity;
+	TorbellinoForceGenerator* tg;
 	std::vector<Firework*> _firework_pool; // Fireworks to 
 	//be used as models!
 		//! This is used currently in the Fireworks to spread 
 	//	more Fireworks!
 	void onParticleDeath(Particle * p);
 	void createFireworkSystem();
+
 
 };
 

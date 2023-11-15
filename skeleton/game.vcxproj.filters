@@ -36,6 +36,12 @@
     <ClCompile Include="DragForceGenerator.cpp">
       <Filter>P3</Filter>
     </ClCompile>
+    <ClCompile Include="TorbellinoForceGenerator.cpp">
+      <Filter>P3</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionForceGenerator.cpp">
+      <Filter>P3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -80,6 +86,12 @@
       <Filter>P3</Filter>
     </ClInclude>
     <ClInclude Include="DragForceGenerator.h">
+      <Filter>P3</Filter>
+    </ClInclude>
+    <ClInclude Include="TorbellinoForceGenerator.h">
+      <Filter>P3</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionForceGenerator.h">
       <Filter>P3</Filter>
     </ClInclude>
   </ItemGroup>
