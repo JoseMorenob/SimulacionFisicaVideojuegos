@@ -13,8 +13,8 @@ ParticleSystem::ParticleSystem(const Vector3& g ) {
 	wf = new WindForceGenerator(Vector3(90,100,90),Vector3(-70,-60,-60),Vector3(50,50,50),3,0);
 	
 	                                  //Vector3 f, Vector3 ini_pos, Vector3 tam, const float k1, const float k2
-	tg = new TorbellinoForceGenerator({ 0.0f,0.0f,0.0f },{0,0,0},{0,0,0},1.4f,0);
-	eg = new ExplosionForceGenerator({-50,-50,-50},{90,90,90},90,0.5f);
+	tg = new TorbellinoForceGenerator({ 0.0f,0.0f,0.0f },{0,0,0},{0,0,0},1.7,0);
+	eg = new ExplosionForceGenerator({-50,-50,-50},{90,90,90},900,1);
 	Vector3 centre(-50, -50, -50);
 	fg.push_back(wf);
 	fg.push_back(tg);
@@ -110,6 +110,8 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 	{
 	case 1: {
 		ne->addGenerator(_firework_generator);
+		/*Vector3 p = ne->GetPos();
+		ne->setPos({ p.x - 40,p.y,p.z-40 });*/
 		force_registry->addRegistry(fg[1], ne);
 		force_registry->addRegistry(tg, ne);
 		break;
@@ -117,6 +119,7 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 	case 2: {
 		//ne->addGenerator(g2);
 		ne->addGenerator(fire);
+		
 		force_registry->addRegistry(wf, ne);
 		force_registry->addRegistry(gr, ne);
 		break;

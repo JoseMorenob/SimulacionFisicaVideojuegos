@@ -19,7 +19,7 @@ public:
 	inline float getDuration()const {
 		return duration;
 	}
-	
+
 	inline void setDuration(float d) {
 		duration = d;
 	}
