@@ -225,3 +225,14 @@ void ParticleSystem::P4_ejercicio1() {
 	fg.push_back(anche);
 	_particles.push_back(pl);
 }
+
+void  ParticleSystem::P4_ejercicio3() {
+
+	Particle* pl = new Particle(Vector3{ -16.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
+	buyoancy = new BuyoancyForceGenerator(50,3,0.9f,Vector3{10,20,0});
+
+	force_registry->addRegistry(fg[1], pl);
+	force_registry->addRegistry(buyoancy, pl);
+	fg.push_back(buyoancy);
+	_particles.push_back(pl);
+}

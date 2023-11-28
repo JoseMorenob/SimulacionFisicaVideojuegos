@@ -17,6 +17,7 @@
 #include "ExplosionForceGenerator.h"
 #include "SpringForceGenerator.h"
 #include "AnchoredSpringFG.h"
+#include "BuyoancyForceGenerator.h"
 class ParticleSystem
 {
 public:
@@ -36,6 +37,7 @@ public:
 	void setK(double k) {
 		anche->setk(k);
 	}
+	void P4_ejercicio3();
 protected:
 	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;
@@ -52,6 +54,7 @@ protected:
 	ExplosionForceGenerator* eg;
 	std::vector<ForceGenerator*> fg;
 	WindForceGenerator* wf;
+	BuyoancyForceGenerator* buyoancy;
 //	generator is only to shoot the firework!!
 	Vector3 _gravity;
 	TorbellinoForceGenerator* tg;

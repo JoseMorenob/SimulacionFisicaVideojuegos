@@ -112,11 +112,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	case 'T': {
+	case 'T': 
 		p->generateFirework(2);
 		break;
-	}
-	case 'F': {
+	
+	case 'F': 
 		//creacion de una partícula
 	/*	Particle* p = new Particle(GetCamera()->getEye(), GetCamera()->getDir()*30, Vector3(0, -3.8, 0), 2, Vector4{ 250 , 150, 150, 1 });
 		particulas.push_back(p);
@@ -125,13 +125,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 		p->generateFirework(1);
 		break;
-	}
+	
 
 	case 'R':
-	{
-		p->generateFirework(3);
+	
+	p->generateFirework(3);
 		break;
-	}
+	
 	case 'P':
 		p->explosion();
 		break;
@@ -139,15 +139,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		p->generateSpringDemo(); break;
 	case 'Z':
 		p->P4_ejercicio1(); break;
-	default:
+
 	case 'X':
 		p->setK(80);
 		break;
 	case 'C':
 		p->setK(10);
 		break;
+	case 'K':
+		p->P4_ejercicio3();
 		break;
+	default: break;
+	
 	}
+	
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

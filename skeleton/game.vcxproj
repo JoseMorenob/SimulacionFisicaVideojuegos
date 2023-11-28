@@ -254,6 +254,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="BuyoancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="DragForceGenerator.cpp" />
     <ClCompile Include="ExplosionForceGenerator.cpp" />
@@ -275,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="BuyoancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="DragForceGenerator.h" />

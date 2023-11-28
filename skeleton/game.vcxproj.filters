@@ -42,8 +42,15 @@
     <ClCompile Include="ExplosionForceGenerator.cpp">
       <Filter>P3</Filter>
     </ClCompile>
-    <ClCompile Include="SpringForceGenerator.cpp" />
-    <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="AnchoredSpringFG.cpp">
+      <Filter>p4</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringForceGenerator.cpp">
+      <Filter>p4</Filter>
+    </ClCompile>
+    <ClCompile Include="BuyoancyForceGenerator.cpp">
+      <Filter>p4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -96,8 +103,15 @@
     <ClInclude Include="ExplosionForceGenerator.h">
       <Filter>P3</Filter>
     </ClInclude>
-    <ClInclude Include="SpringForceGenerator.h" />
-    <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="AnchoredSpringFG.h">
+      <Filter>p4</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>p4</Filter>
+    </ClInclude>
+    <ClInclude Include="BuyoancyForceGenerator.h">
+      <Filter>p4</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -108,6 +122,9 @@
     </Filter>
     <Filter Include="P3">
       <UniqueIdentifier>{27c07032-61eb-4312-8d12-777ebd100cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="p4">
+      <UniqueIdentifier>{f8810a87-eb5d-425e-a8cc-6767a6f31399}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
