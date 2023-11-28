@@ -135,7 +135,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'P':
 		p->explosion();
 		break;
+	case 'U':
+		p->generateSpringDemo(); break;
+	case 'Z':
+		p->P4_ejercicio1(); break;
 	default:
+	case 'X':
+		p->setK(80);
+		break;
+	case 'C':
+		p->setK(10);
+		break;
 		break;
 	}
 }

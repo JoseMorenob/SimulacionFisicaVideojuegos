@@ -42,6 +42,8 @@
     <ClCompile Include="ExplosionForceGenerator.cpp">
       <Filter>P3</Filter>
     </ClCompile>
+    <ClCompile Include="SpringForceGenerator.cpp" />
+    <ClCompile Include="AnchoredSpringFG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -94,6 +96,8 @@
     <ClInclude Include="ExplosionForceGenerator.h">
       <Filter>P3</Filter>
     </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="AnchoredSpringFG.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

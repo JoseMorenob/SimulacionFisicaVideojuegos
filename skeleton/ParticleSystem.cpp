@@ -7,7 +7,7 @@ ParticleSystem::ParticleSystem(const Vector3& g ) {
 	gr = new GravityForceGenerator(g2);
 	force_registry = new ParticleForceRegistry();
 	fg.push_back(gr);
-	g2 = Vector3(0, -0.8, 0);
+	g2 = Vector3(0, -3.8, 0);
 	fg.push_back(new GravityForceGenerator(g2));
 
 	wf = new WindForceGenerator(Vector3(90,100,90),Vector3(-70,-60,-60),Vector3(50,50,50),3,0);
@@ -182,4 +182,46 @@ void ParticleSystem::createFireworkSystem() {
 	fire->setNParticles(10);
 	fire->setgenerator(g3);
 
+}
+
+
+void ParticleSystem::generateSpringDemo() {
+
+	// First one standard spring uniting 2 particles
+				//10.0, 10.0, 0.0 3, (0.0, 0.0, 0.0 3, (0.0, 0.0, 0.0 3, 0.85, 60)
+								//Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color,int c
+	Particle* pl = new Particle(Vector3{ -10.0,50.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
+
+	Particle * p2 = new Particle(Vector3{ 10.0,50.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
+	
+	SpringForceGenerator * f1 = new SpringForceGenerator(1, 10, p2);
+	force_registry->addRegistry(f1, pl);
+
+	SpringForceGenerator * f2 = new SpringForceGenerator(1, 10, pl);
+	force_registry->addRegistry(f2, p2);
+
+	fg.push_back(f1);
+
+	fg.push_back(f2);
+
+	_particles.push_back(pl);
+
+	_particles.push_back(p2);
+
+
+	WindForceGenerator* wind = new WindForceGenerator(Vector3(0,100,0),{0,-30,0},{100,60,300},0.5,0);
+	force_registry->addRegistry(wind, pl);
+	force_registry->addRegistry(wind, p2);
+	force_registry->addRegistry(fg[1], p2);
+	force_registry->addRegistry(fg[1], pl);
+	fg.push_back(wind);
+
+}
+void ParticleSystem::P4_ejercicio1() {
+	Particle* pl = new Particle(Vector3{ -11.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
+	anche= new AnchoredSpringFG(1, 30, { -10,29,0 });
+
+	force_registry->addRegistry(anche, pl);
+	fg.push_back(anche);
+	_particles.push_back(pl);
 }

@@ -15,6 +15,8 @@
 #include "WindForceGenerator.h"
 #include "TorbellinoForceGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "SpringForceGenerator.h"
+#include "AnchoredSpringFG.h"
 class ParticleSystem
 {
 public:
@@ -27,7 +29,15 @@ public:
 	void generateFirework(unsigned firework_type);
 	// Gets a particle generator with name...
 	ParticleGenerator* getParticleGenerator(const std::string& n);
+
+	void createFireworkSystem();
+	void generateSpringDemo();
+	void P4_ejercicio1();
+	void setK(double k) {
+		anche->setk(k);
+	}
 protected:
+	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;
 	std::list <Particle*> _particles;
 	std::list <ParticleGenerator*> _particle_generators; // 
@@ -50,7 +60,7 @@ protected:
 		//! This is used currently in the Fireworks to spread 
 	//	more Fireworks!
 	void onParticleDeath(Particle * p);
-	void createFireworkSystem();
+
 
 
 };
