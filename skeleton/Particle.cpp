@@ -7,6 +7,18 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 co
 	_type = c;
 	vel =Vel;
 	this->color = color;
+	RegisterRenderItem(renderItem);
+}
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO): posicion(Pos) {
+	masa = mas;
+	ac = aceler;
+	force = Vector3(0, 0, 0);
+	
+	renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry(2, 2, 2)) , &posicion, color); // Utilizar la geometría proporcionada
+	_type = c;
+	vel = Vel;
+	this->color = color;
+	RegisterRenderItem(renderItem);
 }
 void Particle::addForce(const Vector3& f) {
 	force += f;

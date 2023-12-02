@@ -149,6 +149,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'K':
 		p->P4_ejercicio3();
 		break;
+	case 'L':
+		p->setMasaParticulaagua(6);
 	default: break;
 	
 	}

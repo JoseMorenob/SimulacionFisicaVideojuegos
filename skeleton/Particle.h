@@ -8,11 +8,13 @@ class Particle
 {
 public:
 	Particle(Vector3 Pos, Vector3 Vel,Vector3 aceler, int mas,Vector4 color,int c);
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c,physx::PxGeometry GEO);
 	bool integrate(float t);
 	float gettimer();
 	inline void setTimer(float t) { timer = t; };
 	inline void setVel(Vector3 v) { vel = v; };
 	const inline Vector3 getVel() { return vel; };
+	inline void setMasa(int m) { masa = m; }
 	inline void setPos(Vector3 p) { posicion.p = p; };
 	inline Vector3 GetPos() { return posicion.p; }
 	inline bool getCuhete() { return cuehete; };

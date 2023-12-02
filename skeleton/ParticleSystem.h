@@ -38,6 +38,7 @@ public:
 		anche->setk(k);
 	}
 	void P4_ejercicio3();
+	void setMasaParticulaagua(int d) { pl->setMasa(6); };
 protected:
 	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;
@@ -63,7 +64,7 @@ protected:
 		//! This is used currently in the Fireworks to spread 
 	//	more Fireworks!
 	void onParticleDeath(Particle * p);
-
+	Particle* pl;
 
 
 };
