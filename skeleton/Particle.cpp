@@ -1,54 +1,104 @@
 #include "Particle.h"
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color,int c): posicion(Pos) {
-	masa = mas;
-	ac = aceler;
-	force = Vector3(0, 0, 0);
-	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(2)), &posicion,color);
-	_type = c;
-	vel =Vel;
-	this->color = color;
-	RegisterRenderItem(renderItem);
+
+
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c) :masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(nullptr), gPhysics(nullptr), currentTransform(Pos) {
+    renderItem = new RenderItem(CreateShape(PxSphereGeometry(2)), &currentTransform, color);
+    //new RenderItem(CreateShape(physx::PxBoxGeometry(3,3,3)), &posicion, Vector4(0.5,0.7,0.8,0.1));
+//RegisterRenderItem(renderItem);
+
 }
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO): posicion(Pos) {
-	masa = mas;
-	ac = aceler;
-	force = Vector3(0, 0, 0);
-	
-	renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry(2, 2, 2)) , &posicion, color); // Utilizar la geometría proporcionada
-	_type = c;
-	vel = Vel;
-	this->color = color;
-	RegisterRenderItem(renderItem);
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO) :masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(nullptr), gPhysics(nullptr), currentTransform(Pos) {
+    renderItem = new RenderItem(CreateShape(PxBoxGeometry(2, 2, 2)), &currentTransform, color);
+    // RegisterRenderItem(renderItem);
+
 }
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysics) : masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(scene), gPhysics(gPhysics), currentTransform(Pos) {
+    this->scene = scene;
+    this->gPhysics = gPhysics;
+    CreateRigidDynamic(physx::PxSphereGeometry(2), Pos, color);
+}
+
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO, PxScene* scene, PxPhysics* gPhysics) : masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(scene), gPhysics(gPhysics), currentTransform(Pos) {
+    this->scene = scene;
+    this->gPhysics = gPhysics;
+    CreateRigidDynamic(GEO, Pos, color);
+}
+
+void Particle::CreateRigidDynamic(physx::PxGeometry GEO, Vector3 Pos, Vector4 color) {
+    // Configurar el cuerpo dinámico
+    rigidDynamic = gPhysics->createRigidDynamic(currentTransform);
+    rigidDynamic->setLinearVelocity({ 0,5,0 });
+    rigidDynamic->setAngularVelocity({ 0,0,0 });
+    PxShape* shape_ad = CreateShape(PxSphereGeometry(2));
+    rigidDynamic->attachShape(*shape_ad);
+
+    PxRigidBodyExt::updateMassAndInertia(*rigidDynamic, 0.15);
+    scene->addActor(*rigidDynamic);
+    // Pintar actor dinámico
+
+   // t = new RenderItem(shape_ad, new_solid, { 0.8, 0.8, 0.8, 1 });
+    renderItem = new RenderItem(shape_ad, rigidDynamic, color);
+
+    // RegisterRenderItem(renderItem);
+}
+
 void Particle::addForce(const Vector3& f) {
-	force += f;
+    force += f;
 }
-void  Particle::clearForce() {
-	force *= 0.0f;
+
+void Particle::clearForce() {
+    force *= 0.0f;
 }
 
 bool Particle::integrate(float t) {
-	// Get the accel considering the force accum
-	Vector3 resulting_accel = force * masa;
-	vel += resulting_accel * t; // Ex. 1.3 --> add  acceleration
-	vel *= powf(damping, t); // Exercise 1.3 --> add
-	
-	posicion.p += vel * t;
-	duration -= t;
-	// Clear accum
-	clearForce();
-	return duration < 0.0;
+    // Obtener la aceleración considerando la acumulación de fuerzas
+    Vector3 resulting_accel = force * masa;
+    vel += resulting_accel * t;
+    vel *= powf(damping, t);
 
+    if (rigidDynamic != nullptr) {
+        //Vector3 linearVelocity(vel.x, vel.y, vel.z);
+        //rigidDynamic->setLinearVelocity(linearVelocity);
+        //
+        //// Actualizar la posición basada en la velocidad
+        currentTransform = rigidDynamic->getGlobalPose();
+        //physx::PxTransform newTransform = physx::PxTransform(currentTransform.p + linearVelocity * t, currentTransform.q);
+        //rigidDynamic->setGlobalPose(newTransform);
+    }
+    else {
+        currentTransform.p += vel * t;
+        duration -= t;
+    }
+    // Aplicar la velocidad al cuerpo dinámico
+
+
+    duration -= t;
+    clearForce();
+    return duration < 0.0;
 }
+
 float Particle::gettimer() {
-	return timer;
+    return timer;
 }
-Particle* Particle::clone()const {
-	//Vector3 Pos, Vector3 Vel,Vector3 aceler, int mas,Vector4 color,int c
-	return new Particle(posicion.p,vel,ac,masa,color,_type);
 
+Particle* Particle::clone() const {
+    // Aquí puedes decidir si deseas implementar o no la función de clonación
+    // return new Particle(posicion.p, vel, ac, masa, color, _type);
+    return nullptr;  // O simplemente devolver nullptr
 }
-// Destructor de la clase Particle
+
 Particle::~Particle() {
-	DeregisterRenderItem(renderItem);
+
+    if (gPhysics != nullptr ) {
+        scene->removeActor(*rigidDynamic);
+        rigidDynamic->release();
+
+    }
+
+    if (renderItem != nullptr) {
+        DeregisterRenderItem(renderItem);
+        renderItem = nullptr;
+    }
+
+
 }

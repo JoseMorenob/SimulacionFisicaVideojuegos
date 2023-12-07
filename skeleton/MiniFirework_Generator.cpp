@@ -1,6 +1,10 @@
 #include "MiniFirework_Generator.h"
 #include "Firework.h"
 #include "ParticleGenerator.h"
+MiniFirework_Generator::MiniFirework_Generator(PxScene* scene, PxPhysics* gPhysics):scene(scene),gPhysics(gPhysics) {
+
+
+}
 std::list<Particle*> MiniFirework_Generator::generateParticles() {
     std::list<Particle*> particles;
 
@@ -16,7 +20,7 @@ std::list<Particle*> MiniFirework_Generator::generateParticles() {
         Vector3 position(x, y, z);
         Vector3 velocity(velX, velY, velZ);
 
-        Firework* newParticle = new Firework(position, velocity, gravity, 2, Vector4{ 0.3 , 0.3 , 0.4, 1 }, 2);
+        Firework* newParticle = new Firework(position, velocity, gravity, 2, Vector4{ 0.3 , 0.3 , 0.4, 1 }, 2,scene,gPhysics);
         newParticle->setDuration(4);
         newParticle->setTimer(0);
         newParticle->addGenerator(g);

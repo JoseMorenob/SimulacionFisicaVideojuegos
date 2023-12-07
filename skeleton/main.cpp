@@ -11,7 +11,12 @@
 #include <iostream>
 #include <list>
 #include "ParticleSystem.h"
+#include "PxShape.h"
 
+#include "RenderUtils.hpp"
+#include "Suelo.h"
+#include "SolidoDinamico.h"
+#include "RigidBodySystem.h"
 std::string display_text = "Mateme";
 
 
@@ -34,6 +39,7 @@ ContactReportCallback gContactReportCallback;
 std::list<Particle*>particulas;
 ParticleSystem* p=nullptr;
 ParticleSystem* p2 = nullptr;
+RigidBodySystem* r = nullptr;
 using namespace std;
 //std::vector<Particle*> particulas;
 // Initialize physics engine
@@ -50,7 +56,8 @@ void initPhysics(bool interactive)
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
-
+	
+	
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -60,7 +67,17 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	p = new ParticleSystem();
+	p = new ParticleSystem(gScene,gPhysics);
+	//r = new RigidBodySystem(gScene, gPhysics);
+
+
+
+	
+	
+	Suelo* s = new Suelo({ 0,-40,0 }, { 10,10,10,1 }, gScene, gPhysics);
+	//SolidoDinamico* d = new SolidoDinamico(gScene,gPhysics,{0,0,0},{4,4,4});
+	//SolidoDinamico* d2 = new SolidoDinamico(gScene, gPhysics, { 0,70,0 }, { 4,4,4 });
+
 
 	}
 
@@ -83,7 +100,8 @@ void stepPhysics(bool interactive, double t)
 		e = aux;
 	}*/
 	if(p!=nullptr)p->update(t);
-	if (p2 != nullptr)p2->update(t);
+	//if (p2 != nullptr)p2->update(t);
+	//if (r != nullptr)r->update(t);
 }
 
 // Function to clean data
@@ -151,6 +169,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case 'L':
 		p->setMasaParticulaagua(6);
+		break;
+	case 'M':
+		break;
+	case'Q':
+		p->generateDinamic();
+		break;
+	case 'E':
+	//	r->addPersonajeLinearForce({ 3,0,0 }); break;
+		p->AplicarFuerzaSegunRaton({ 0,200,0 }, GetCamera()->getTransform().p, nullptr); break;
 	default: break;
 	
 	}

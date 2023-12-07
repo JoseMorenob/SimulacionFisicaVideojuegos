@@ -10,7 +10,6 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>p2</Filter>
     </ClCompile>
@@ -51,6 +50,16 @@
     <ClCompile Include="BuyoancyForceGenerator.cpp">
       <Filter>p4</Filter>
     </ClCompile>
+    <ClCompile Include="Suelo.cpp">
+      <Filter>p5</Filter>
+    </ClCompile>
+    <ClCompile Include="SolidoDinamico.cpp">
+      <Filter>p5</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodySystem.cpp">
+      <Filter>p5</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -112,6 +121,15 @@
     <ClInclude Include="BuyoancyForceGenerator.h">
       <Filter>p4</Filter>
     </ClInclude>
+    <ClInclude Include="Suelo.h">
+      <Filter>p5</Filter>
+    </ClInclude>
+    <ClInclude Include="SolidoDinamico.h">
+      <Filter>p5</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodySystem.h">
+      <Filter>p5</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -125,6 +143,9 @@
     </Filter>
     <Filter Include="p4">
       <UniqueIdentifier>{f8810a87-eb5d-425e-a8cc-6767a6f31399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="p5">
+      <UniqueIdentifier>{d8270ea1-15c3-4573-9823-1d656d0ec02f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

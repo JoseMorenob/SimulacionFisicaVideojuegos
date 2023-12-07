@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 #include <iostream>
-ParticleSystem::ParticleSystem(const Vector3& g ) {
+ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vector3& g):scene(scene),gPhysics(gPhysics) {
 	_gravity = g;
 	createFireworkSystem();
 	Vector3 g2(0, -9.8, 0);
@@ -20,26 +20,42 @@ ParticleSystem::ParticleSystem(const Vector3& g ) {
 	fg.push_back(tg);
 	fg.push_back(eg);
 
-	//genreamos particulas para luego la explosion
-	for (int i = 0; i < 15; ++i) {
-		// Calcular una posición aleatoria dentro del área
-		float randomRadius = (static_cast<float>(rand()) / RAND_MAX) * 50;
-		float theta = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
-		float phi = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
+	////genreamos particulas para luego la explosion
+	//for (int i = 0; i < 15; ++i) {
+	//	// Calcular una posición aleatoria dentro del área
+	//	float randomRadius = (static_cast<float>(rand()) / RAND_MAX) * 50;
+	//	float theta = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
+	//	float phi = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
 
-		float x = centre.x + randomRadius * sin(theta) * cos(phi);
-		float y = centre.y + randomRadius * sin(theta) * sin(phi);
-		float z = centre.z + randomRadius * cos(theta);
+	//	float x = centre.x + randomRadius * sin(theta) * cos(phi);
+	//	float y = centre.y + randomRadius * sin(theta) * sin(phi);
+	//	float z = centre.z + randomRadius * cos(theta);
 
-		// Dirección fija para mantenerse quietas
-		Vector3 direction(0.0f, 0.0f, 0.0f);
+	//	// Dirección fija para mantenerse quietas
+	//	Vector3 direction(0.0f, 0.0f, 0.0f);
 
-		// Crear la partícula y añadirla al contenedor
-		Particle* newParticle = new Firework(Vector3(x, y, z), direction, _gravity, 2, Vector4{ 0.4f, 0.3f, 0.4f, 1.0f }, 0);
-		_particles.push_back(newParticle);
-		explosion_parts.push_back(newParticle);
-	}
+	//	// Crear la partícula y añadirla al contenedor
+	//	Particle* newParticle = new Firework(Vector3(x, y, z), direction, _gravity, 2, Vector4{ 0.4f, 0.3f, 0.4f, 1.0f }, 0);
+	//	_particles.push_back(newParticle);
+	//	explosion_parts.push_back(newParticle);
+	//}
 	//_firework_generator = new ParticleGenerator();
+
+
+	pl = new Particle(Vector3{ 10,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics);
+	pl->setDuration(9999);
+}
+void ParticleSystem::AplicarFuerzaSegunRaton(const physx::PxVec3& posicionRaton, const physx::PxVec3& camaraPosicion, physx::PxRigidDynamic* rigidDynamic) {
+	// Calcula la dirección desde la cámara hasta la posición del ratón en el mundo
+	physx::PxVec3 direccion = posicionRaton - camaraPosicion;
+	direccion.normalize();
+
+	// Aplica una fuerza en la dirección calculada
+	physx::PxReal fuerzaMagnitude = 100.0f;  // Ajusta según sea necesario
+	physx::PxVec3 fuerza = direccion * fuerzaMagnitude;
+
+	// Aplica la fuerza al objeto
+	pl->SetLinearVelocity(fuerza);
 }
 ParticleSystem::~ParticleSystem() {
 	auto c = _particles.begin();
@@ -89,26 +105,28 @@ void ParticleSystem::update(double t) {
 			}
 			else if( finish) onParticleDeath(*v);
 		//fuera pantalla
-		 else if ((*v)->GetPos().x > 800 || (*v)->GetPos().x < -800 || (*v)->GetPos().y < -800 || (*v)->GetPos().y>800) {
+		/* else if ((*v)->GetPos().x > 800 || (*v)->GetPos().x < -800 || (*v)->GetPos().y < -800 || (*v)->GetPos().y>800) {
 			onParticleDeath(*v);
 		 }
-			
+			*/
 
 	}
+	std::cout << _particles.size() << std::endl;
 	
 }
 void ParticleSystem::generateFirework(unsigned firework_type) {
 	//						GetCamera()->getEye(), GetCamera()->getDir() * 30, _gravity, 2, Vector4{ 250 , 150, 150, 1 })
 
-	auto ne = new Firework(Vector3(GetCamera()->getEye().x-50, GetCamera()->getEye().y-50, GetCamera()->getEye().z-50), Vector3(GetCamera()->getDir().x *100, GetCamera()->getDir().y*80, GetCamera()->getDir().z*(80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 },firework_type);
-	_particles.push_back(ne);
+	
 
-
+	Firework* ne;
 	/*Vector3 g2(GetCamera()->getDir().x * 4, 0, GetCamera()->getDir().z * 4);
 	force_registry->addRegistry(new GravityForceGenerator(g2), ne);*/
 	switch (firework_type)
 	{
 	case 1: {
+		 ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type);
+		_particles.push_back(ne);
 		ne->addGenerator(_firework_generator);
 		/*Vector3 p = ne->GetPos();
 		ne->setPos({ p.x - 40,p.y,p.z-40 });*/
@@ -117,14 +135,18 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 		break;
 	}
 	case 2: {
-		//ne->addGenerator(g2);
+		ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type,scene,gPhysics);
+		_particles.push_back(ne);
+		ne->SetLinearVelocity({ -20,0,-20 });
 		ne->addGenerator(fire);
 		
-		force_registry->addRegistry(wf, ne);
-		force_registry->addRegistry(gr, ne);
+		/*force_registry->addRegistry(wf, ne);
+		force_registry->addRegistry(gr, ne);*/
 		break;
 	}
 	case 3:{
+		ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type);
+		_particles.push_back(ne);
 		ne->addGenerator(g3);
 		force_registry->addRegistry(gr, ne);
 		
@@ -174,7 +196,7 @@ void ParticleSystem::createFireworkSystem() {
 	 g3->dev_pos = Vector3(1, 1,1);
 	g3->dev_vel = Vector3(60, 1, 50);
 
-	fire = new MiniFirework_Generator();
+	fire = new MiniFirework_Generator(scene,gPhysics);
 	_particle_generators.push_back(fire);
 	fire->setGravity(10*_gravity);
 	fire->pos_width = Vector3(7, 3, 7);
@@ -183,7 +205,23 @@ void ParticleSystem::createFireworkSystem() {
 	fire->setgenerator(g3);
 
 }
+void ParticleSystem::generateDinamic() {
+	float randomX = ((float)rand() / RAND_MAX) * 2.0f - 1.0f; // Número aleatorio entre -1 y 1
+	float randomY = 1; // Número aleatorio entre -1 y 1
+	float randomZ = ((float)rand() / RAND_MAX) * 2.0f - 1.0f; // Número aleatorio entre -1 y 1
 
+	// Normaliza el vector para asegurarse de que tenga longitud 1
+	physx::PxVec3 randomDirection(randomX, randomY, randomZ);
+	randomDirection.normalize();
+	//(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysi
+	Firework* p = new Firework({-100,30,-100}, randomDirection,{0,0,0},1,{0.5,0.3,0.3,1},1,scene,gPhysics);
+	p->SetLinearVelocity(randomDirection);
+	p->addGenerator(_firework_generator);
+//PxScene* scene, PxPhysics* gPhysics, Vector3  pos, Vector3 size
+	//SolidoDinamico* d = new SolidoDinamico(scene, gPhysics, { -100,30,-100 }, { 2,2,2 });
+	//d->setLinearVel(randomDirection);
+	_particles.push_back(p);
+}
 
 void ParticleSystem::generateSpringDemo() {
 

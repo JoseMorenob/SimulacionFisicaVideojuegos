@@ -22,7 +22,7 @@ class ParticleSystem
 {
 public:
 	// Creates a void system with a det. gravity
-	ParticleSystem(const Vector3 & g = { 0.0f, -9.8f, 0.0f});
+	ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vector3& g = { 0.0f, -9.8f, 0.0f });
 	~ParticleSystem();
 	// Integrates the particles and checks for its lifetime, 
 	void update(double t);
@@ -39,6 +39,8 @@ public:
 	}
 	void P4_ejercicio3();
 	void setMasaParticulaagua(int d) { pl->setMasa(6); };
+	void generateDinamic();
+	void AplicarFuerzaSegunRaton(const physx::PxVec3& posicionRaton, const physx::PxVec3& camaraPosicion, physx::PxRigidDynamic* rigidDynamic);
 protected:
 	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;
@@ -66,6 +68,6 @@ protected:
 	void onParticleDeath(Particle * p);
 	Particle* pl;
 
-
+	PxScene* scene; PxPhysics* gPhysics;
 };
 
