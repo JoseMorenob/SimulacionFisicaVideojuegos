@@ -21,6 +21,24 @@ void BuyoancyForceGenerator::updateForce(Particle* particle, double duration) {
 	f.y = liquid_density * volume * immersed * 9.8;
 	particle->addForce(f);
 }
+void BuyoancyForceGenerator::UpdateForce(Particle* particle, double duration) {
+	float h = particle->GetPos().y;
+	float h0 = posicion.p.y;
+
+	Vector3 f(0, 0, 0);
+	float immersed = 0.0;
+	if (h - h0 > height * 0.5) {
+		immersed = 0.0;
+	}
+	else if (h0 - h > height * 0.5) {
+		immersed = 1.0;
+	}
+	else {
+		immersed = (h0 - h) / height + 0.5;
+	}
+	f.y = liquid_density * volume * immersed * 9.8;
+	particle->addForce(f);
+}
 BuyoancyForceGenerator::~BuyoancyForceGenerator() {
 
  }

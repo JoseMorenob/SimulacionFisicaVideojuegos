@@ -73,10 +73,32 @@ void initPhysics(bool interactive)
 
 
 	
+	//GetCamera()->handleMotion(0, 0);
+	Suelo* abajo = new Suelo({ 0, 0, 0 }, { 20, 1, 20, 1 }, gScene, gPhysics);
+	Suelo* enfrente = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
+	enfrente->suelo->setGlobalPose({ 0, 20, -20 });
+
+	Suelo* lado = new Suelo({ -20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
+	lado->suelo->setGlobalPose({ -20, 20, 0 });
+
+	Suelo* lado2 = new Suelo({ 20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
+	lado2->suelo->setGlobalPose({ 20, 20, 0 });
+
+	Suelo* enfrente2 = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
+	enfrente2->suelo->setGlobalPose({ 0, 20, 20 });
+
+	GetCamera()->handleAnalogMove(0,0);
+
+
+	//suelos
+	// 
+	// 
+	//for (int i = 0; i < 30; ++i) {
+
+	//	Suelo* Parela = new Suelo({(float) i * 40,1,(float)i * 40 }, { 40,1,40,1 }, gScene, gPhysics);
+
+	//}
 	
-	Suelo* s = new Suelo({ 0,-40,0 }, { 10,10,10,1 }, gScene, gPhysics);
-	//SolidoDinamico* d = new SolidoDinamico(gScene,gPhysics,{0,0,0},{4,4,4});
-	//SolidoDinamico* d2 = new SolidoDinamico(gScene, gPhysics, { 0,70,0 }, { 4,4,4 });
 
 
 	}
@@ -136,7 +158,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	
 	case 'F': 
 		//creacion de una partícula
-	/*	Particle* p = new Particle(GetCamera()->getEye(), GetCamera()->getDir()*30, Vector3(0, -3.8, 0), 2, Vector4{ 250 , 150, 150, 1 });
+	/*	Particle* p = new Particle(
+	
+	()->getEye(), GetCamera()->getDir()*30, Vector3(0, -3.8, 0), 2, Vector4{ 250 , 150, 150, 1 });
 		particulas.push_back(p);
 
 		break;*/
@@ -177,6 +201,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case 'E':
 	//	r->addPersonajeLinearForce({ 3,0,0 }); break;
+		GetCamera()->getTransform().p = { 100,0,0 };
+
+
 		p->AplicarFuerzaSegunRaton({ 0,200,0 }, GetCamera()->getTransform().p, nullptr); break;
 	default: break;
 	

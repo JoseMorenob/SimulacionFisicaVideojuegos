@@ -16,12 +16,14 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 co
     this->scene = scene;
     this->gPhysics = gPhysics;
     CreateRigidDynamic(physx::PxSphereGeometry(2), Pos, color);
+    save = rigidDynamic;
 }
 
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO, PxScene* scene, PxPhysics* gPhysics) : masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(scene), gPhysics(gPhysics), currentTransform(Pos) {
     this->scene = scene;
     this->gPhysics = gPhysics;
     CreateRigidDynamic(GEO, Pos, color);
+    save = rigidDynamic;
 }
 
 void Particle::CreateRigidDynamic(physx::PxGeometry GEO, Vector3 Pos, Vector4 color) {
@@ -29,7 +31,7 @@ void Particle::CreateRigidDynamic(physx::PxGeometry GEO, Vector3 Pos, Vector4 co
     rigidDynamic = gPhysics->createRigidDynamic(currentTransform);
     rigidDynamic->setLinearVelocity({ 0,5,0 });
     rigidDynamic->setAngularVelocity({ 0,0,0 });
-    PxShape* shape_ad = CreateShape(PxSphereGeometry(2));
+    shape_ad = CreateShape(PxSphereGeometry(2));
     rigidDynamic->attachShape(*shape_ad);
 
     PxRigidBodyExt::updateMassAndInertia(*rigidDynamic, 0.15);
@@ -89,16 +91,17 @@ Particle* Particle::clone() const {
 
 Particle::~Particle() {
 
-    if (gPhysics != nullptr ) {
-        scene->removeActor(*rigidDynamic);
-        rigidDynamic->release();
+    //if (gPhysics != nullptr ) {
+    //    scene->removeActor(*rigidDynamic);
+    //    rigidDynamic->release();
+    //   // delete(renderItem);
+    //}
 
-    }
-
-    if (renderItem != nullptr) {
-        DeregisterRenderItem(renderItem);
-        renderItem = nullptr;
-    }
+    //if (renderItem != nullptr) {
+    //    DeregisterRenderItem(renderItem);
+    //    delete(renderItem);
+    //    renderItem = nullptr;
+    //}
 
 
 }

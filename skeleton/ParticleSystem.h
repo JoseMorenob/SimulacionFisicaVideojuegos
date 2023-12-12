@@ -45,6 +45,7 @@ protected:
 	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;
 	std::list <Particle*> _particles;
+	std::list<Particle*>to_delete;
 	std::list <ParticleGenerator*> _particle_generators; // 
 	std::list<Particle*> explosion_parts;
 //	These are the registred generators(for on demand set

@@ -18,3 +18,17 @@ SpringForceGenerator::SpringForceGenerator(double k, double resting_length, Part
 			}
 		
 		}
+
+	void SpringForceGenerator::UpdateForce(Particle* particle, double t) {
+		// Particle is the particle to apply the force
+		if (_other != nullptr) {
+			Vector3 relative_pos_vector = _other->GetPos() - particle->GetPos();
+			Vector3 force;
+			// normalize: Normalize the relative_pos_vector and returns its length.
+			const float length = relative_pos_vector.normalize();
+			const float delta_x = length - _resting_length;
+			force = relative_pos_vector * delta_x * _k;
+			particle->AddForce(force);
+		}
+
+	}

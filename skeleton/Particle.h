@@ -17,10 +17,13 @@ public:
     void CreateRigidDynamic(physx::PxGeometry GEO, Vector3 Pos, Vector4 color);
     bool integrate(float t);
     float gettimer();
+    inline PxRigidDynamic* GetPxRigidDynamic() { return rigidDynamic; };
     inline void setTimer(float t) { timer = t; };
     inline void setVel(Vector3 v) { vel = v; };
     const inline Vector3 getVel() { return vel; };
     inline void setMasa(int m) { masa = m; };
+    inline RenderItem* getRenderItem() { return renderItem; };
+    inline PxShape* getShape() { return shape_ad; };
    inline void setPos(Vector3 p) { currentTransform.p = PxVec3(p.x, p.y, p.z); };
     inline Vector3 GetPos() { return Vector3(currentTransform.p.x, currentTransform.p.y, currentTransform.p.z); }
     inline bool getCuhete() { return cuehete; };
@@ -34,11 +37,18 @@ public:
     inline float getMasa()const { return masa; }
     virtual Particle* clone() const;
     void AddForce(Vector3 const v) {
+        if(rigidDynamic!=nullptr)
         rigidDynamic->addForce(v);
        
     }
     void SetLinearVelocity(Vector3 const v) {
-        rigidDynamic->setLinearVelocity(v);
+        if (rigidDynamic != nullptr) rigidDynamic->setLinearVelocity(v);
+    }
+    void setRigid() {
+        rigidDynamic = nullptr;
+    }
+    void release() {
+        save->release();
     }
     // Type
     unsigned _type;
@@ -54,7 +64,9 @@ protected:
     Vector3 vel;
     
     physx::PxRigidDynamic* rigidDynamic=nullptr;  // Cambiado de PxTransform a PxRigidDynamic
+    physx::PxRigidDynamic* save = nullptr;
     Vector4 color;
+    PxShape* shape_ad;
     // Accumulated force
     Vector3 force;
     PxScene* scene=nullptr; PxPhysics* gPhysics=nullptr;

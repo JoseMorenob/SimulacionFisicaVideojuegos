@@ -9,6 +9,7 @@ public:
 
     }
     virtual void updateForce(Particle* p, double t);
+    virtual void UpdateForce(Particle* p, double t);
 
 protected:
 };

@@ -38,3 +38,30 @@ ExplosionForceGenerator::ExplosionForceGenerator(Vector3 inipos, Vector3 lado,fl
      float distance = sqrt(distance_squared);
      return distance;
  }
+ void ExplosionForceGenerator::UpdateForce(Particle* p, double t) {
+
+     Vector3 pos = p->GetPos();
+
+     // Verificar si la partícula está dentro del cubo de explosión
+     if ((pos.x >= inipos.x - lado.x * 0.5f && pos.x <= inipos.x + lado.x * 0.5f) &&
+         (pos.y >= inipos.y - lado.y * 0.5f && pos.y <= inipos.y + lado.y * 0.5f) &&
+         (pos.z >= inipos.z - lado.z * 0.5f && pos.z <= inipos.z + lado.z * 0.5f)) {
+         // La partícula está dentro del cubo de explosión
+         // Realiza las acciones que necesites para las partículas dentro del cubo de explosión
+
+
+         float r = calculateDistance(pos.x, pos.y, pos.z, inipos.x, inipos.y, inipos.z);
+         float exponentialTerm = exp(-t / tau);
+         Vector3 diff = pos - inipos;
+         float magnitud_explosion = (k / (r * r)) * exponentialTerm;
+         Vector3 forceDirection = pos - inipos;
+         Vector3 explosionForce = magnitud_explosion * forceDirection;
+         p->AddForce(explosionForce);
+
+     }
+
+
+
+
+
+ }

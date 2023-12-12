@@ -5,7 +5,9 @@ double GaussianParticleGenerator::generateGaussianValue(double mean, double stdd
     std::normal_distribution<double> distribution(mean, stddev);
     return distribution(generator);
 }
+GaussianParticleGenerator::GaussianParticleGenerator(PxScene* scene, PxPhysics* gPhysics):scene(scene),gPhysics(gPhysics) {
 
+}
 std::list<Particle*> GaussianParticleGenerator::generateParticles() {
     std::list<Particle*> particles;
 
@@ -23,7 +25,8 @@ std::list<Particle*> GaussianParticleGenerator::generateParticles() {
 
         Vector3 velocity(velX, velY, velZ);
    //                                  Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color
-        Particle* newParticle = new Particle(position, velocity, gravity, 0.5, Vector4{ 0.6 , 0.1 , 1, 1 },0);
+        Particle* newParticle = new Particle(position, velocity, gravity, 0.5, Vector4{ 0.6 , 0.1 , 1, 1 },0,scene,gPhysics);
+        newParticle->SetLinearVelocity(velocity);
         newParticle->setDuration(20);
 
 

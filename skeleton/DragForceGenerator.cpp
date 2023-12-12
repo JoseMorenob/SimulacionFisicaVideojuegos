@@ -15,3 +15,13 @@ void DragForceGenerator::updateForce(Particle* particle, double t) {
 	dragF = -v * drag_coef;
 	particle->addForce(dragF);
  }
+void DragForceGenerator::UpdateForce(Particle* particle, double t) {
+	if (fabs((1 / particle->getMasa()) < 1e-10)) return;
+	//compute drag force
+	Vector3 v = particle->getVel();
+	float drag_coef = v.normalize();
+	Vector3 dragF;
+	drag_coef = _k1 * drag_coef + _k2 * drag_coef * drag_coef;
+	dragF = -v * drag_coef;
+	particle->AddForce(dragF);
+}
