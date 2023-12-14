@@ -73,21 +73,21 @@ void initPhysics(bool interactive)
 
 
 	
-	//GetCamera()->handleMotion(0, 0);
-	Suelo* abajo = new Suelo({ 0, 0, 0 }, { 20, 1, 20, 1 }, gScene, gPhysics);
-	Suelo* enfrente = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
-	enfrente->suelo->setGlobalPose({ 0, 20, -20 });
+	////GetCamera()->handleMotion(0, 0);
+	//Suelo* abajo = new Suelo({ 0, 0, 0 }, { 20, 1, 20, 1 }, gScene, gPhysics);
+	//Suelo* enfrente = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
+	//enfrente->suelo->setGlobalPose({ 0, 20, -20 });
 
-	Suelo* lado = new Suelo({ -20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
-	lado->suelo->setGlobalPose({ -20, 20, 0 });
+	//Suelo* lado = new Suelo({ -20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
+	//lado->suelo->setGlobalPose({ -20, 20, 0 });
 
-	Suelo* lado2 = new Suelo({ 20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
-	lado2->suelo->setGlobalPose({ 20, 20, 0 });
+	//Suelo* lado2 = new Suelo({ 20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
+	//lado2->suelo->setGlobalPose({ 20, 20, 0 });
 
-	Suelo* enfrente2 = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
-	enfrente2->suelo->setGlobalPose({ 0, 20, 20 });
+	//Suelo* enfrente2 = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
+	//enfrente2->suelo->setGlobalPose({ 0, 20, 20 });
 
-	GetCamera()->handleAnalogMove(0,0);
+	//GetCamera()->handleAnalogMove(0,0);
 
 
 	//suelos
@@ -205,6 +205,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 
 		p->AplicarFuerzaSegunRaton({ 0,200,0 }, GetCamera()->getTransform().p, nullptr); break;
+	case 'J':
+		p->Torbelline();
+		break;
 	default: break;
 	
 	}

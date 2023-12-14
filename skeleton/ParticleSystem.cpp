@@ -134,47 +134,84 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 	
 	Firework* ne;
 	Particle* pu;
+	std::list<Particle*> p;
+	//switch (firework_type)
+	//{
+	//case 1: {
+	//	 ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type);
+	//	_particles.push_back(ne);
+	//	ne->addGenerator(_firework_generator);
+	//	/*Vector3 p = ne->GetPos();
+	//	ne->setPos({ p.x - 40,p.y,p.z-40 });*/
+	//	force_registry->addRegistry(fg[1], ne);
+	//	force_registry->addRegistry(tg, ne);
+	//	break;
+	//}
+	//case 2: {
+	//	
+	//	ne = new Firework(Vector3(GetCamera()->getEye().x , GetCamera()->getEye().y , GetCamera()->getEye().z ), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, 2,scene,gPhysics);
+	//	_particles.push_back(ne);
+	//	ne->SetLinearVelocity(GetCamera()->getDir());
+	//	ne->addGenerator(_firework_generator);
+	//	//ne->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);//QUITAR GRAVEDAD
+	//	ne->GetPxRigidDynamic()->addForce(PxVec3(0.0f, 0.0f, 0.0f));
+	//	ne->GetPxRigidDynamic()->setLinearVelocity(PxVec3(0.0f, 0.0f, 0.0f));
+	//	force_registry->addRegistry(wf, ne);
+	//	force_registry->addRegistry(gr, ne);
+	//	break;
+	//}
+	//case 3:{
+	//	ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type);
+	//	_particles.push_back(ne);
+	//	ne->addGenerator(g3);
+	//	force_registry->addRegistry(gr, ne);
+	//	
+	//	break;
+	//}
 
+	//default:
+	//	break;
+	//}
 	switch (firework_type)
 	{
-	case 1: {
-		 ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type);
-		_particles.push_back(ne);
-		ne->addGenerator(_firework_generator);
-		/*Vector3 p = ne->GetPos();
-		ne->setPos({ p.x - 40,p.y,p.z-40 });*/
-		force_registry->addRegistry(fg[1], ne);
-		force_registry->addRegistry(tg, ne);
+	case 1:
+		fire->setOrigin({ 10,0,10 });
+		fire->setMeanVelocity({ 2,2,2 });
+		 p = fire->generateParticles();
+		for (auto c : p) {
+			_particles.push_back(c);
+		}
 		break;
-	}
-	case 2: {
-		
-		ne = new Firework(Vector3(GetCamera()->getEye().x , GetCamera()->getEye().y , GetCamera()->getEye().z ), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, 2,scene,gPhysics);
-		_particles.push_back(ne);
-		ne->SetLinearVelocity(GetCamera()->getDir());
-		ne->addGenerator(_firework_generator);
-		//ne->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);//QUITAR GRAVEDAD
-		ne->GetPxRigidDynamic()->addForce(PxVec3(0.0f, 0.0f, 0.0f));
-		ne->GetPxRigidDynamic()->setLinearVelocity(PxVec3(0.0f, 0.0f, 0.0f));
-		force_registry->addRegistry(wf, ne);
-		force_registry->addRegistry(gr, ne);
+	case 2:
+		_firework_generator->setOrigin({ 10,0,10 });
+		_firework_generator->setMeanVelocity({ 2,2,2 });
+		p = _firework_generator->generateParticles();
+		for (auto c : p) {
+			_particles.push_back(c);
+		}
+	case 3:
+		g2->setOrigin({ 10,0,10 });
+		g2->setMeanVelocity({ 2,2,2 });
+		p = g2->generateParticles();
+		for (auto c : p) {
+			_particles.push_back(c);
+		}
 		break;
-	}
-	case 3:{
-		ne = new Firework(Vector3(GetCamera()->getEye().x - 50, GetCamera()->getEye().y - 50, GetCamera()->getEye().z - 50), Vector3(GetCamera()->getDir().x * 100, GetCamera()->getDir().y * 80, GetCamera()->getDir().z * (80)), _gravity, 2, Vector4{ 0.4 , 0.3 , 0.4,1 }, firework_type);
-		_particles.push_back(ne);
-		ne->addGenerator(g3);
-		force_registry->addRegistry(gr, ne);
-		
-		break;
-	}
-
 	default:
 		break;
 	}
+	
 
 
 
+}
+
+void ParticleSystem::Torbelline() {
+
+	Particle* p = new Particle(Vector3{ 10,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0, scene, gPhysics);
+	p->setDuration(3);
+	force_registry->addRegistry(tg, p);
+	_particles.push_back(p);
 }
 ParticleGenerator* ParticleSystem::getParticleGenerator(const std::string& n) {
 	if (n == "fireworkGenerator") {
@@ -185,13 +222,23 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(const std::string& n) {
 	}
 }
 void ParticleSystem::onParticleDeath(Particle* v) {
+	auto c = force_registry->begin();
+	while ( force_registry->size()>0&  c != force_registry->end()) {
+		auto d = c;
+		++c;
+		if (v == d->second) {
+			d->second = nullptr;
+		}
+	}
+
+
 	if (v->GetPxRigidDynamic() != nullptr) {
 		scene->removeActor(*(v->GetPxRigidDynamic()));
 		v->GetPxRigidDynamic()->detachShape(*(v->getShape()));
 		v->getRenderItem()->release();
 		v->GetPxRigidDynamic()->release();
 		_particles.remove(v);
-	
+		
 		delete(v);
 	}
 	else {
@@ -212,8 +259,8 @@ void ParticleSystem::createFireworkSystem() {
 	g2 = new UniformParticleGenerator();
 	_particle_generators.push_back(g2);
 	g2->setGravity(_gravity);
-	g2->pos_width = Vector3(3, 3,3);
-	g2->vel_width = Vector3(2, 5, 1);
+	g2->pos_width = Vector3(0, 0,0);
+	g2->vel_width = Vector3(20, 50, 10);
 
 
 
@@ -255,9 +302,9 @@ void ParticleSystem::generateSpringDemo() {
 	// First one standard spring uniting 2 particles
 				//10.0, 10.0, 0.0 3, (0.0, 0.0, 0.0 3, (0.0, 0.0, 0.0 3, 0.85, 60)
 								//Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color,int c
-	Particle* pl = new Particle(Vector3{ -10.0,50.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
+	Particle* pl = new Particle(Vector3{ -10.0,50.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics);
 
-	Particle * p2 = new Particle(Vector3{ 10.0,50.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
+	Particle * p2 = new Particle(Vector3{ 10.0,50.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics);
 	
 	SpringForceGenerator * f1 = new SpringForceGenerator(1, 10, p2);
 	force_registry->addRegistry(f1, pl);
@@ -274,7 +321,9 @@ void ParticleSystem::generateSpringDemo() {
 	_particles.push_back(p2);
 
 
-	WindForceGenerator* wind = new WindForceGenerator(Vector3(0,100,0),{0,-30,0},{100,60,300},0.5,0);
+	WindForceGenerator* wind = new WindForceGenerator(Vector3(0,500,0),{0,-30,0},{100,60,300},0.5,0);
+	pl->setDuration(90);
+	p2->setDuration(90);
 	force_registry->addRegistry(wind, pl);
 	force_registry->addRegistry(wind, p2);
 	force_registry->addRegistry(fg[1], p2);
@@ -283,8 +332,10 @@ void ParticleSystem::generateSpringDemo() {
 
 }
 void ParticleSystem::P4_ejercicio1() {
-	Particle* pl = new Particle(Vector3{ -11.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0);
-	anche= new AnchoredSpringFG(1, 30, { -10,29,0 });
+	Particle* pl = new Particle(Vector3{ -11.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics);
+	pl->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	pl->setDuration(99);
+	anche= new AnchoredSpringFG(1, 30, { -10,29,0 },scene,gPhysics);
 
 	force_registry->addRegistry(anche, pl);
 	fg.push_back(anche);
@@ -293,8 +344,10 @@ void ParticleSystem::P4_ejercicio1() {
 
 void  ParticleSystem::P4_ejercicio3() {
 	physx::PxBoxGeometry v;
-	 pl = new Particle(Vector3{ -16.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,v);
-	buyoancy = new BuyoancyForceGenerator(50,3,0.9f,Vector3{10,20,0});
+	 pl = new Particle(Vector3{ -16.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,v,scene,gPhysics);
+	 pl->setDuration(99);
+	pl->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	buyoancy = new BuyoancyForceGenerator(50,3,4,Vector3{10,20,0});
 	force_registry->addRegistry(fg[1], pl);
 	force_registry->addRegistry(buyoancy, pl);
 	fg.push_back(buyoancy);

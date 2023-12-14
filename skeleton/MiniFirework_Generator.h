@@ -10,10 +10,11 @@ class MiniFirework_Generator :
 public:
     MiniFirework_Generator(PxScene* scene, PxPhysics* gPhysics);
     void setgenerator(ParticleGenerator* g);
+    std::list<Particle*> generateParticles();
 private:
     PxScene* scene;
     PxPhysics* gPhysics;
-    std::list<Particle*> generateParticles();
+   
     ParticleGenerator* g;
 };
 

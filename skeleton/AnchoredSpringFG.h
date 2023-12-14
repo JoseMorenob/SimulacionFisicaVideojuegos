@@ -8,7 +8,7 @@ class AnchoredSpringFG :
     public SpringForceGenerator
 {
 public: 
-    AnchoredSpringFG(double k, double resting, const Vector3 anchor_pos);
+    AnchoredSpringFG(double k, double resting, const Vector3 anchor_pos, PxScene* scene, PxPhysics* gPhysics);
         ~AnchoredSpringFG() {
             DeregisterRenderItem(item);
     }

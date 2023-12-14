@@ -37,8 +37,7 @@ public:
     inline float getMasa()const { return masa; }
     virtual Particle* clone() const;
     void AddForce(Vector3 const v) {
-        if(rigidDynamic!=nullptr)
-        rigidDynamic->addForce(v);
+        if(rigidDynamic!=nullptr)rigidDynamic->addForce(v);
        
     }
     void SetLinearVelocity(Vector3 const v) {

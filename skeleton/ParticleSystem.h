@@ -41,6 +41,7 @@ public:
 	void setMasaParticulaagua(int d) { pl->setMasa(6); };
 	void generateDinamic();
 	void AplicarFuerzaSegunRaton(const physx::PxVec3& posicionRaton, const physx::PxVec3& camaraPosicion, physx::PxRigidDynamic* rigidDynamic);
+	void Torbelline();
 protected:
 	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;

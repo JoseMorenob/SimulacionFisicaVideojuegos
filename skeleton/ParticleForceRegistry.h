@@ -7,12 +7,15 @@ class ParticleForceRegistry:public std::multimap<ForceGenerator*,Particle*>	 {
 public:
 	void updateForces(double duration) {
 		for (auto it = begin(); it != end(); ++it) {
-			if (it->second->GetPxRigidDynamic() != nullptr) {
-				it->first->UpdateForce(it->second, duration);
+			if (it->second != nullptr) {
+				if (it->second->GetPxRigidDynamic() != nullptr) {
+					it->first->UpdateForce(it->second, duration);
+				}
+				else {
+					it->first->updateForce(it->second, duration);
+				}
 			}
-			else {
-				it->first->updateForce(it->second, duration); 
-			}
+		
 		}
 	}	
 
