@@ -210,7 +210,7 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 void ParticleSystem::Torbelline() {
 
 	Particle* p = new Particle(Vector3{ 10,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0, scene, gPhysics);
-	p->setDuration(3);
+	p->setDuration(30);
 	force_registry->addRegistry(tg, p);
 	_particles.push_back(p);
 }

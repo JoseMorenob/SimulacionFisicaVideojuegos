@@ -93,11 +93,11 @@ void initPhysics(bool interactive)
 	//suelos
 	// 
 	// 
-	//for (int i = 0; i < 30; ++i) {
+	for (int i = 0; i < 30; ++i) {
 
-	//	Suelo* Parela = new Suelo({(float) i * 40,1,(float)i * 40 }, { 40,1,40,1 }, gScene, gPhysics);
+		Suelo* Parela = new Suelo({(float) i * 5,1,(float)i *5 }, { 5,1,5,1 }, gScene, gPhysics);
 
-	//}
+	}
 	
 
 
