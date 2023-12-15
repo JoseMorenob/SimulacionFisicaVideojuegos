@@ -189,6 +189,7 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 		for (auto c : p) {
 			_particles.push_back(c);
 		}
+		break;
 	case 3:
 		g2->setOrigin({ 10,0,10 });
 		g2->setMeanVelocity({ 2,2,2 });
@@ -335,7 +336,7 @@ void ParticleSystem::P4_ejercicio1() {
 	Particle* pl = new Particle(Vector3{ -11.0,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics);
 	pl->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 	pl->setDuration(99);
-	anche= new AnchoredSpringFG(1, 30, { -10,29,0 },scene,gPhysics);
+	anche= new AnchoredSpringFG(10, 30, { -10,29,0 },scene,gPhysics);
 
 	force_registry->addRegistry(anche, pl);
 	fg.push_back(anche);
