@@ -19,9 +19,9 @@ std::list<Particle*> Firework::explode() {
 void Firework::addGenerator(ParticleGenerator* p) {
 	_gens.push_back(std::shared_ptr<ParticleGenerator>(p));
 }
-Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c):Particle(Pos,Vel,aceler,mas,color,c) {
+Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c,int size):Particle(Pos,Vel,aceler,mas,color,c,size) {
 
 }
-Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysics) :Particle(Pos, Vel, aceler, mas, color, c,scene,gPhysics) {
+Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysics,int size) :Particle(Pos, Vel, aceler, mas, color, c,scene,gPhysics,size) {
 
 }

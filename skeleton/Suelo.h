@@ -7,7 +7,7 @@
 	class Suelo
 	{
 	public:
-		Suelo(Vector3 pos,Vector4 size, PxScene* scene, PxPhysics* gPhysics);
+		Suelo(Vector3 pos,Vector4 size, PxScene* scene, PxPhysics* gPhysics, Vector4 color);
 		virtual ~Suelo();
 		PxRigidStatic* suelo;
 	protected:

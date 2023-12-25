@@ -60,6 +60,10 @@
       <Filter>p5</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ventilador.cpp" />
+    <ClCompile Include="ResetForceGenerator.cpp" />
+    <ClCompile Include="SinusoidalForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -130,6 +134,10 @@
     <ClInclude Include="RigidBodySystem.h">
       <Filter>p5</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Ventilador.h" />
+    <ClInclude Include="ResetForceGenerator.h" />
+    <ClInclude Include="SinusoidalForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

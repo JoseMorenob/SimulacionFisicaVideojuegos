@@ -266,15 +266,19 @@
     <ClCompile Include="MiniFirework_Generator.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="ResetForceGenerator.cpp" />
     <ClCompile Include="RigidBodySystem.cpp" />
+    <ClCompile Include="SinusoidalForceGenerator.cpp" />
     <ClCompile Include="SolidoDinamico.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Suelo.cpp" />
     <ClCompile Include="TorbellinoForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
+    <ClCompile Include="Ventilador.cpp" />
     <ClCompile Include="WindForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -294,15 +298,19 @@
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="ResetForceGenerator.h" />
     <ClInclude Include="RigidBodySystem.h" />
+    <ClInclude Include="SinusoidalForceGenerator.h" />
     <ClInclude Include="SolidoDinamico.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Suelo.h" />
     <ClInclude Include="TorbellinoForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
+    <ClInclude Include="Ventilador.h" />
     <ClInclude Include="WindForceGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

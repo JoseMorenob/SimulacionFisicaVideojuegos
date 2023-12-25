@@ -22,6 +22,7 @@ SpringForceGenerator::SpringForceGenerator(double k, double resting_length, Part
 
 	void SpringForceGenerator::UpdateForce(Particle* particle, double t) {
 		// Particle is the particle to apply the force
+		particle->GetPxRigidDynamic()->setGlobalPose(PxTransform(Vector3( particle->GetPxRigidDynamic()->getGlobalPose().p.x,20, particle->GetPxRigidDynamic()->getGlobalPose().p.z )));
 		if (_other != nullptr) {
 			Vector3 relative_pos_vector = _other->GetPos() - particle->GetPos();
 			Vector3 force;

@@ -18,6 +18,9 @@
 #include "SpringForceGenerator.h"
 #include "AnchoredSpringFG.h"
 #include "BuyoancyForceGenerator.h"
+#include "Player.h"
+#include "ResetForceGenerator.h"
+#include "SinusoidalForceGenerator.h"
 class ParticleSystem
 {
 public:
@@ -32,7 +35,7 @@ public:
 	ParticleGenerator* getParticleGenerator(const std::string& n);
 
 	void createFireworkSystem();
-	void generateSpringDemo();
+	void generateSpringDemo(Vector3 pos1, Vector3 pos2);
 	void P4_ejercicio1();
 	void setK(double k) {
 		anche->setk(k);
@@ -42,13 +45,32 @@ public:
 	void generateDinamic();
 	void AplicarFuerzaSegunRaton(const physx::PxVec3& posicionRaton, const physx::PxVec3& camaraPosicion, physx::PxRigidDynamic* rigidDynamic);
 	void Torbelline();
+	void movePlayer();
+
+	void addParticles(std::list<Particle*> pt) {
+		for (auto p : pt) {
+			_particles.push_back(p);
+		}
+	}
+	void MoveRight() {
+		//if (player->GetPxRigidDynamic()->getLinearVelocity().x < 70 )
+		player->SetLinearVelocity({ player->GetPxRigidDynamic()->getLinearVelocity().x+20, player->GetPxRigidDynamic()->getLinearVelocity().y, player->GetPxRigidDynamic()->getLinearVelocity().z });
+	}
+	void MoveLeft() {
+		//if (player->GetPxRigidDynamic()->getLinearVelocity().z < 70)
+		player->SetLinearVelocity({ player->GetPxRigidDynamic()->getLinearVelocity().x , player->GetPxRigidDynamic()->getLinearVelocity().y, player->GetPxRigidDynamic()->getLinearVelocity().z+20 });
+	}
 protected:
+	void checkExpl0sion();
+	std::vector<Vector3> posiciones;
+	std::vector<std::vector<Particle*>> vs;
+	Vector3 resetPosition;
 	AnchoredSpringFG* anche;
 	ParticleForceRegistry* force_registry;
 	std::list <Particle*> _particles;
 	std::list<Particle*>to_delete;
 	std::list <ParticleGenerator*> _particle_generators; // 
-	std::list<Particle*> explosion_parts;
+	std::vector<Particle*> explosion_parts;
 //	These are the registred generators(for on demand set
 	//	generation prob.to 0
 	GaussianParticleGenerator* _firework_generator; // This 
@@ -60,6 +82,12 @@ protected:
 	std::vector<ForceGenerator*> fg;
 	WindForceGenerator* wf;
 	BuyoancyForceGenerator* buyoancy;
+	WindForceGenerator* rozamiento;
+	WindForceGenerator* izquierdas;
+	WindForceGenerator* derechas;
+	WindForceGenerator* izquierdas2;
+	PxTransform pruebas;
+	SinusoidalForceGenerator* seno;
 //	generator is only to shoot the firework!!
 	Vector3 _gravity;
 	TorbellinoForceGenerator* tg;
@@ -69,7 +97,12 @@ protected:
 	//	more Fireworks!
 	void onParticleDeath(Particle * p);
 	Particle* pl;
+	int cont = 0;
+	PxScene* scene; 
+	PxPhysics* gPhysics;
+	std::vector<ExplosionForceGenerator*> exp;
 
-	PxScene* scene; PxPhysics* gPhysics;
+
+	Player* player;
 };
 

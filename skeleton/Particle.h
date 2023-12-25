@@ -9,12 +9,12 @@ using namespace physx;
 class Particle
 {
 public:
-    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c);
-    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysics );
-    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO, PxScene* scene, PxPhysics* gPhysics );
-    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO);
+    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c,int size);
+    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysics,int size );
+    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO, PxScene* scene, PxPhysics* gPhysics,int size );
+    Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO, int size);
     ~Particle();
-    void CreateRigidDynamic(physx::PxGeometry GEO, Vector3 Pos, Vector4 color);
+    void CreateRigidDynamic(int size, Vector3 Pos, Vector4 color);
     bool integrate(float t);
     float gettimer();
     inline PxRigidDynamic* GetPxRigidDynamic() { return rigidDynamic; };

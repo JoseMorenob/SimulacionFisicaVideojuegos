@@ -17,6 +17,7 @@
 #include "Suelo.h"
 #include "SolidoDinamico.h"
 #include "RigidBodySystem.h"
+
 std::string display_text = "Mateme";
 
 
@@ -41,6 +42,7 @@ ParticleSystem* p=nullptr;
 ParticleSystem* p2 = nullptr;
 RigidBodySystem* r = nullptr;
 using namespace std;
+list<Suelo*> s;
 //std::vector<Particle*> particulas;
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -93,13 +95,44 @@ void initPhysics(bool interactive)
 	//suelos
 	// 
 	// 
-	for (int i = 0; i < 30; ++i) {
-
-		Suelo* Parela = new Suelo({(float) i * 5,1,(float)i *5 }, { 5,1,5,1 }, gScene, gPhysics);
-
-	}
 	
+	for (int i = 0; i < 50; ++i) {
 
+		Suelo* Parela = new Suelo({(float) i * 70,1,(float)i *70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.7,0.7,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+	//el de abajo con viento
+	for (int i = 50; i < 60; ++i) {
+
+		Suelo* Parela = new Suelo({ (float)i * 70,-40,(float)i * 70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.2,0.2,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+	for (int i = 60; i < 120; ++i) {
+
+		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.7,0.7,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+	//lateral derecha
+	for (int i = 120; i < 150; ++i) {
+		Suelo* Parela = new Suelo({ (float)i*70,100,(float)i*70+90 }, { 10,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		s.push_back(Parela);
+	}
+	//lateral izquierda
+	for (int i = 150; i < 180; ++i) {
+		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 - 200 }, { 10,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		s.push_back(Parela);
+	}
+	//lateral derechas
+	for (int i = 180; i < 210; ++i) {
+		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 + 200 }, { 10,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		s.push_back(Parela);
+	}
+	//el de abajo con viento
+		for (int i = 210; i < 260; ++i) {
+
+			Suelo* Parela = new Suelo({ (float)i * 70,-40,(float)i * 70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.2,0.2,0.1 ,0.5 });
+			s.push_back(Parela);
+		}
 
 	}
 
@@ -142,6 +175,10 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+	auto x = s.begin();
+		/*while (x != s.end()) {
+			delete(*x);
+		}*/
 	delete(p);
 	}
 
@@ -152,61 +189,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	case 'T': 
-		p->generateFirework(2);
+	case 'T':
+		p->movePlayer();
 		break;
+	case 'F':
+		p->MoveRight();
+		break;
+	case 'H':
 	
-	case 'F': 
-		//creacion de una partícula
-	/*	Particle* p = new Particle(
-	
-	()->getEye(), GetCamera()->getDir()*30, Vector3(0, -3.8, 0), 2, Vector4{ 250 , 150, 150, 1 });
-		particulas.push_back(p);
-
-		break;*/
-
-		p->generateFirework(1);
-		break;
-	
-
-	case 'R':
-	
-	p->generateFirework(3);
-		break;
-	
-	case 'P':
-		p->explosion();
-		break;
-	case 'U':
-		p->generateSpringDemo(); break;
-	case 'Z':
-		p->P4_ejercicio1(); break;
-
-	case 'X':
-		p->setK(80);
-		break;
-	case 'C':
-		p->setK(10);
-		break;
-	case 'K':
-		p->P4_ejercicio3();
-		break;
-	case 'L':
-		p->setMasaParticulaagua(6);
-		break;
-	case 'M':
-		break;
-	case'Q':
-		p->generateDinamic();
-		break;
-	case 'E':
-	//	r->addPersonajeLinearForce({ 3,0,0 }); break;
-		GetCamera()->getTransform().p = { 100,0,0 };
-
-
-		p->AplicarFuerzaSegunRaton({ 0,200,0 }, GetCamera()->getTransform().p, nullptr); break;
-	case 'J':
-		p->Torbelline();
+		p->MoveLeft();
 		break;
 	default: break;
 	
@@ -216,8 +207,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
+	/*const string a = actor1->getName();
+	const string b = actor2->getName();
+	std::cout << a << std::endl;*/
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+	
 }
 
 

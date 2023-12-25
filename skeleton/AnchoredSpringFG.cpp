@@ -1,5 +1,5 @@
 #include "AnchoredSpringFG.h"
-AnchoredSpringFG::AnchoredSpringFG(double k, double resting, const Vector3 anchor_pos, PxScene* scene, PxPhysics* gPhysics):SpringForceGenerator(k,resting,new Particle(anchor_pos,{0,0,0},{0,0,0},0,{0.0,0.0,0.0,0.0},0)), posicion(anchor_pos){
+AnchoredSpringFG::AnchoredSpringFG(double k, double resting, const Vector3 anchor_pos, PxScene* scene, PxPhysics* gPhysics):SpringForceGenerator(k,resting,new Particle(anchor_pos,{0,0,0},{0,0,0},0,{0.0,0.0,0.0,0.0},0,2)), posicion(anchor_pos){
 
 
 

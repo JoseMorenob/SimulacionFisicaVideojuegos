@@ -44,6 +44,7 @@ Camera::Camera(const PxVec3& eye, const PxVec3& dir)
 	mDir = dir.getNormalized();
 	mMouseX = 0;
 	mMouseY = 0;
+
 }
 
 void Camera::handleMouse(int button, int state, int x, int y)
@@ -77,7 +78,12 @@ void Camera::handleAnalogMove(float x, float y)
 	mEye += mDir*y;
 	mEye += viewY*x;
 }
+void Camera::setPosition(float x, float y, float z) {
+	mEye.x = x;
+	mEye.y = y;
+	mEye.z = z;
 
+}
 void Camera::handleMotion(int x, int y)
 {
 	int dx = mMouseX - x;

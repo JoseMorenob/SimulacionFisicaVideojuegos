@@ -20,7 +20,7 @@ std::list<Particle*> MiniFirework_Generator::generateParticles() {
         Vector3 position(x, y, z);
         Vector3 velocity(velX, velY, velZ);
 
-        Firework* newParticle = new Firework(position, velocity, gravity, 2, Vector4{ 0.3 , 0.3 , 0.4, 1 }, 2,scene,gPhysics);
+        Firework* newParticle = new Firework(position, velocity, gravity, 2, Vector4{ 0.3 , 0.3 , 0.4, 1 }, 2,scene,gPhysics,2);
         newParticle->setDuration(4);
         newParticle->setTimer(0);
         newParticle->addGenerator(g);

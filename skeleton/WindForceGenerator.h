@@ -10,5 +10,7 @@ public:
 protected:
     Vector3 porigen, lado;
     Vector3 f;
+    PxTransform p;
+
 };
 
