@@ -64,6 +64,7 @@
     <ClCompile Include="Ventilador.cpp" />
     <ClCompile Include="ResetForceGenerator.cpp" />
     <ClCompile Include="SinusoidalForceGenerator.cpp" />
+    <ClCompile Include="RotateAroundPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Ventilador.h" />
     <ClInclude Include="ResetForceGenerator.h" />
     <ClInclude Include="SinusoidalForceGenerator.h" />
+    <ClInclude Include="RotateAroundPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

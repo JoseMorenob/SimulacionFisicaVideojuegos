@@ -21,6 +21,7 @@
 #include "Player.h"
 #include "ResetForceGenerator.h"
 #include "SinusoidalForceGenerator.h"
+#include "RotateAroundPoint.h"
 class ParticleSystem
 {
 public:

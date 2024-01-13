@@ -114,17 +114,17 @@ void initPhysics(bool interactive)
 	}
 	//lateral derecha
 	for (int i = 120; i < 150; ++i) {
-		Suelo* Parela = new Suelo({ (float)i*70,100,(float)i*70+90 }, { 10,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		Suelo* Parela = new Suelo({ (float)i*70,0,(float)i*70 }, { 70,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
 		s.push_back(Parela);
 	}
 	//lateral izquierda
 	for (int i = 150; i < 180; ++i) {
-		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 - 200 }, { 10,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 10,100,70,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
 		s.push_back(Parela);
 	}
 	//lateral derechas
 	for (int i = 180; i < 210; ++i) {
-		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 + 200 }, { 10,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 70,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
 		s.push_back(Parela);
 	}
 	//el de abajo con viento

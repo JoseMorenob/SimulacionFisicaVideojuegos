@@ -272,6 +272,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="ResetForceGenerator.cpp" />
     <ClCompile Include="RigidBodySystem.cpp" />
+    <ClCompile Include="RotateAroundPoint.cpp" />
     <ClCompile Include="SinusoidalForceGenerator.cpp" />
     <ClCompile Include="SolidoDinamico.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
@@ -304,6 +305,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="ResetForceGenerator.h" />
     <ClInclude Include="RigidBodySystem.h" />
+    <ClInclude Include="RotateAroundPoint.h" />
     <ClInclude Include="SinusoidalForceGenerator.h" />
     <ClInclude Include="SolidoDinamico.h" />
     <ClInclude Include="SpringForceGenerator.h" />

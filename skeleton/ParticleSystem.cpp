@@ -51,7 +51,7 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 		for (int j = 0; j < 15; ++j) {
 
 			// Calcular una posición aleatoria dentro del área
-			float randomRadius = (static_cast<float>(rand()) / RAND_MAX) * 25;
+			float randomRadius = (static_cast<float>(rand()) / RAND_MAX) * 55;
 			float theta = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
 			float phi = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
 
@@ -63,8 +63,8 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 			Vector3 direction(0.0f, 0.0f, 0.0f);
 
 			// Crear la partícula y añadirla al contenedor
-			Particle* newParticle = new Firework(Vector3(x, y, z), direction, _gravity, 2, Vector4{ 0.4f, 0.3f, 0.4f, 1.0f }, 0, scene, gPhysics, 2);
-			newParticle->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);//QUITAR GRAVEDAD
+			Particle* newParticle = new Firework(Vector3(x, y, z), direction, _gravity, 2, Vector4{ 0.4f, 0.3f, 0.4f, 1.0f }, 0, scene, gPhysics, 15);
+			newParticle->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, true);//QUITAR GRAVEDAD
 		
 			newParticle->GetPxRigidDynamic()->addForce(PxVec3(0.0f, 0.0f, 0.0f));
 			newParticle->GetPxRigidDynamic()->setLinearVelocity(PxVec3(0.0f, 0.0f, 0.0f));
@@ -76,7 +76,7 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	}
 	
 	//_firework_generator = new ParticleGenerator();
-#pragma endregion
+#pragma endregion player
 
 
 
@@ -97,7 +97,15 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	}
 #pragma endregion
 
-	
+
+	Particle* pssss = new Particle(Vector3{ 10,2.0,10.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0, scene, gPhysics,2);
+	pssss->setDuration(99999);
+	pssss->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	_particles.push_back(pssss);
+	Vector3 positionn(0, 5, 0);
+	RotateAroundPoint* rota = new RotateAroundPoint(positionn,0.4);
+	force_registry->addRegistry(rota, pssss);
+
 }
 void  ParticleSystem::checkExpl0sion() {
 	physx::PxTransform playerTransform = player->GetPxRigidDynamic()->getGlobalPose();
@@ -111,12 +119,12 @@ void  ParticleSystem::checkExpl0sion() {
 			pow(playerPosition.z - particlePosition.z, 2));
 		
 		// Comprobar si la distancia es menor a 10
-		if (distance < 100.0f) {
+		if (distance < 200.0f) {
 			//explosion();
 			for (int j =0; j < 15  ; ++j) {
 				if (vs[i][j] != nullptr) {
 					auto d = vs[i][j];
-					d->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);//QUITAR GRAVEDAD
+					d->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);//QUITAR GRAVEDAD
 					force_registry->addRegistry(seno, d);
 					vs[i][j] = nullptr;
 				}
@@ -175,8 +183,6 @@ ParticleSystem::~ParticleSystem() {
 		Particle* sd = *x;
 		++x;
 		scene->removeActor(*(sd->GetPxRigidDynamic()));
-	//	sd->GetPxRigidDynamic()->detachShape(*(sd->getShape()));
-	//	sd->getRenderItem()->release();
 		sd->GetPxRigidDynamic()->release();
 		scene->removeActor(*(sd->GetPxRigidDynamic()));
 		sd->release();

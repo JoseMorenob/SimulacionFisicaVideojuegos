@@ -24,6 +24,7 @@ public:
     inline void setMasa(int m) { masa = m; };
     inline RenderItem* getRenderItem() { return renderItem; };
     inline PxShape* getShape() { return shape_ad; };
+    inline PxTransform getTrans() { return currentTransform; };
    inline void setPos(Vector3 p) { currentTransform.p = PxVec3(p.x, p.y, p.z); };
     inline Vector3 GetPos() { return Vector3(currentTransform.p.x, currentTransform.p.y, currentTransform.p.z); }
     inline bool getCuhete() { return cuehete; };
