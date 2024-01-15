@@ -36,13 +36,13 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	fg.push_back(seno);
 	
 
-#pragma region ref
+#pragma region ParticulasExplosion
 
 	//generamos particulas para luego la explosion
 	int t = 0;
 	for (int i = 60; i < 120; i+=10) {
 
-		eg = new ExplosionForceGenerator({ (float)i*70+50,130,(float)i*70+50}, {90,90,90}, 60400, 10);
+		eg = new ExplosionForceGenerator({ (float)i*70+50,130,(float)i*70+50}, {90,90,90}, 40, 10);
 		Vector3 centre = { (float)i * 70,130,(float)i * 70 };
 		fg.push_back(eg);
 		exp.push_back(eg);
@@ -76,12 +76,11 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	}
 	
 	//_firework_generator = new ParticleGenerator();
-#pragma endregion player
+#pragma endregion ParticulasExplosion
 
-
-
+#pragma region Player
 	resetPosition = { 10,2.0,0.0 };
-	player = new Player(Vector3{ 10,2.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 5, scene, gPhysics,g2,this);
+	player = new Player(Vector3{ 10,2.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 5, scene, gPhysics, g2, this);
 	_particles.push_back(player);
 	player->setDuration(99999999);
 	force_registry->addRegistry(gr, player);
@@ -90,7 +89,7 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	force_registry->addRegistry(derechas, player);
 	force_registry->addRegistry(izquierdas2, player);
 	force_registry->addRegistry(rozamiento, player);
-
+#pragma endregion Player
 #pragma region Muelles
 	for (int i = 20; i < 300; i += 10) {
 		generateSpringDemo({(float)i*10+120,(float)1,(float)10*i},{ (float)i*10,(float)1,(float)i*10+120});
