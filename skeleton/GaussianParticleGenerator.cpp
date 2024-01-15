@@ -25,7 +25,7 @@ std::list<Particle*> GaussianParticleGenerator::generateParticles() {
 
         Vector3 velocity(velX, velY, velZ);
    //                                  Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color
-        Particle* newParticle = new Particle(position, velocity, gravity, 0.5, Vector4{ 0.6 , 0.1 , 1, 1 },0,scene,gPhysics,2);
+        Particle* newParticle = new Particle(position, velocity, gravity, 0.5, Vector4{ 0.941,0.824,0.184,0.702 },0,scene,gPhysics,2);
         newParticle->SetLinearVelocity(velocity);
         newParticle->setDuration(3);
         

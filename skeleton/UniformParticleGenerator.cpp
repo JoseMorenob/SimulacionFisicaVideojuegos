@@ -24,7 +24,7 @@ std::list<Particle*> UniformParticleGenerator::generateParticles() {
         Vector3 position(x, y, z);
         Vector3 velocity(velX, velY, velZ);
 
-        Particle* newParticle = new Particle(position, velocity, gravity, 2, Vector4{ 0.6 , 0.1 , 0.4, 1 }, 0,2);
+        Particle* newParticle = new Particle(position, velocity, gravity, 2, Vector4{0.125,0.129,0.122,0.702 }, 0,2);
         particles.push_back(newParticle);
     }
    

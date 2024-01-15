@@ -91,20 +91,14 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	force_registry->addRegistry(izquierdas2, player);
 	force_registry->addRegistry(rozamiento, player);
 
-#pragma region PowerUps
+#pragma region Muelles
 	for (int i = 20; i < 300; i += 10) {
 		generateSpringDemo({(float)i*10+120,(float)1,(float)10*i},{ (float)i*10,(float)1,(float)i*10+120});
 	}
 #pragma endregion
 
 
-	Particle* pssss = new Particle(Vector3{ 10,2.0,10.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0, scene, gPhysics,2);
-	pssss->setDuration(99999);
-	pssss->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
-	_particles.push_back(pssss);
-	Vector3 positionn(0, 5, 0);
-	RotateAroundPoint* rota = new RotateAroundPoint(positionn,0.4);
-	force_registry->addRegistry(rota, pssss);
+	
 
 }
 void  ParticleSystem::checkExpl0sion() {
@@ -206,20 +200,7 @@ void ParticleSystem::update(double t) {
 	force_registry->updateForces(t);
 
 	GetCamera()->setPosition(player->GetPos().x-100, player->GetPos().y+90, player->GetPos().z-100);
-	//cont++;	if (cont % 0 == 0) {
-	//	
-	//		fire->setOrigin({ (float)60 * 60 + 70,1,(float)60 * 60 });
-	//		std::list<Particle*>pss = fire->generateParticles();
-	//		for (auto c : pss) {
-	//			_particles.push_back(c);
-	//		}
-	//		fire->setOrigin({ (float)60 * 60,10,(float)60 * 60 + 70 });
-	//		std::list<Particle*>pss2 = fire->generateParticles();
-	//		for (auto c : pss2) {
-	//			_particles.push_back(c);
-	//		}
-	//	
-	//}
+	
 
 	
 	while (c != _particles.end()) {
@@ -251,13 +232,16 @@ void ParticleSystem::update(double t) {
 					(*v)->GetPxRigidDynamic()->setLinearVelocity(currentLinearVelocity);
 				}
 				if ((*v)->GetPxRigidDynamic()->getGlobalPose().p.x > (float)250 * 70) {
-					fire->setOrigin({ (float)260 * 70,-40,(float)260 * 70 });
-					std::list<Particle*>pd = fire->generateParticles();
-					for (auto d : pd) {
-						_particles.push_back(d);
-						force_registry->addRegistry(gr, d);
-
+					contador++;
+					if (contador >= 100) {
+									//Vector3 Pos,                 Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, int size
+						Firework* fg = new Firework({(float)260 * 70, -40, (float)260 * 70},{0,30,0},{0,0.5,0},1,{0.4,0.1,0.1,0.5},1,2);
+						fg->setDuration(3);
+						contador = 0;
+						fg->addGenerator(_firework_generator);
+						_particles.push_back(fg);
 					}
+				
 				}
 
 			}
@@ -454,14 +438,14 @@ void ParticleSystem::generateSpringDemo(Vector3 pos1,Vector3 pos2) {
 	// First one standard spring uniting 2 particles
 				//10.0, 10.0, 0.0 3, (0.0, 0.0, 0.0 3, (0.0, 0.0, 0.0 3, 0.85, 60)
 								//Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color,int c
-	Particle* pl = new Particle(pos1, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,2);
+	Particle* pl = new Particle(pos1, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,4);
 
-	Particle * p2 = new Particle(pos2, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,2);
+	Particle * p2 = new Particle(pos2, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,4);
 	
-	SpringForceGenerator * f1 = new SpringForceGenerator(10, 1, p2);
+	SpringForceGenerator * f1 = new SpringForceGenerator(40, 1, p2);
 	force_registry->addRegistry(f1, pl);
 
-	SpringForceGenerator * f2 = new SpringForceGenerator(10, 1, pl);
+	SpringForceGenerator * f2 = new SpringForceGenerator(40, 1, pl);
 	force_registry->addRegistry(f2, p2);
 
 	fg.push_back(f1);

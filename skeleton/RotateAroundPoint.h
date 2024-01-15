@@ -47,5 +47,5 @@ private:
     Vector3 rotationCenter;
     double rotationSpeed;
     float radius = 5;
-    float angle = 0,newRotationAngle=0;
+    float angle = 2*PxPi,newRotationAngle=0;
 };

@@ -103,7 +103,7 @@ protected:
 	PxPhysics* gPhysics;
 	std::vector<ExplosionForceGenerator*> exp;
 
-
+	int contador = 0;
 	Player* player;
 };
 
