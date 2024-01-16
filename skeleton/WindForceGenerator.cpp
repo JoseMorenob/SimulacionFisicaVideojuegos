@@ -27,7 +27,7 @@ void WindForceGenerator::UpdateForce(Particle* particle, double t) {
 		Vector3 vel_result = (f + particle->getVel());
 		//compute drag force
 		Vector3 dragF = _k1 * vel_result + _k2 * vel_result * vel_result.magnitude();
-		std::cout << "colision "<< pos.z << std::endl;
+
 		particle->AddForce(dragF);
 	}
 	else return;

@@ -19,9 +19,7 @@
 #include "AnchoredSpringFG.h"
 #include "BuyoancyForceGenerator.h"
 #include "Player.h"
-#include "ResetForceGenerator.h"
-#include "SinusoidalForceGenerator.h"
-#include "RotateAroundPoint.h"
+#include "Suelo.h"
 class ParticleSystem
 {
 public:
@@ -30,7 +28,6 @@ public:
 	~ParticleSystem();
 	// Integrates the particles and checks for its lifetime, 
 	void update(double t);
-	void explosion();
 	void generateFirework(unsigned firework_type);
 	// Gets a particle generator with name...
 	ParticleGenerator* getParticleGenerator(const std::string& n);
@@ -88,7 +85,7 @@ protected:
 	WindForceGenerator* derechas;
 	WindForceGenerator* izquierdas2;
 	PxTransform pruebas;
-	SinusoidalForceGenerator* seno;
+	
 //	generator is only to shoot the firework!!
 	Vector3 _gravity;
 	TorbellinoForceGenerator* tg;
@@ -102,7 +99,7 @@ protected:
 	PxScene* scene; 
 	PxPhysics* gPhysics;
 	std::vector<ExplosionForceGenerator*> exp;
-
+	std::vector<Suelo*>s;
 	int contador = 0;
 	Player* player;
 };

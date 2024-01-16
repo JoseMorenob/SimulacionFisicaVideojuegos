@@ -14,32 +14,7 @@ RigidBodySystem::~RigidBodySystem() {
 	
 }
 void RigidBodySystem::update(double t) {
-	//auto c = particles.begin();
-
-	//while (c != particles.end()) {
-	//	auto v = c;
-	//	++c;
-	//	bool finish = (*v)->integrate(t);
-	//	//std::cout << (*v)->gettimer() << "\n";
-
-	//	if ((*v)->_type > 0 && finish) {
-	//		Firework* firework = static_cast<Firework*>(*v);
-	//		std::list<Particle*> p = firework->explode();
-	//		for (auto d : p) {
-	//			particles.push_back(d);
-	//			/*force_registry->addRegistry(gr, d);
-	//			force_registry->addRegistry(wf, d);*/
-	//		}
-	//		onParticleDeath(*v);
-	//	}
-	//	else if (finish) onParticleDeath(*v);
-	//	//fuera pantalla
-	//	else if ((*v)->GetPos().x > 800 || (*v)->GetPos().x < -800 || (*v)->GetPos().y < -800 || (*v)->GetPos().y>800) {
-	//		onParticleDeath(*v);
-	//	}
-
-
-	//}
+	
 }
 	void RigidBodySystem::onParticleDeath(SolidoDinamico* p) {
 			delete(p);

@@ -18,7 +18,7 @@
 #include "SolidoDinamico.h"
 #include "RigidBodySystem.h"
 
-std::string display_text = "Mateme";
+std::string display_text = "Jose Moreno Barbero";
 
 
 using namespace physx;
@@ -39,8 +39,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 std::list<Particle*>particulas;
 ParticleSystem* p=nullptr;
-ParticleSystem* p2 = nullptr;
-RigidBodySystem* r = nullptr;
+
 using namespace std;
 list<Suelo*> s;
 //std::vector<Particle*> particulas;
@@ -70,69 +69,13 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	p = new ParticleSystem(gScene,gPhysics);
-	//r = new RigidBodySystem(gScene, gPhysics);
-
+	
 
 
 	
-	////GetCamera()->handleMotion(0, 0);
-	//Suelo* abajo = new Suelo({ 0, 0, 0 }, { 20, 1, 20, 1 }, gScene, gPhysics);
-	//Suelo* enfrente = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
-	//enfrente->suelo->setGlobalPose({ 0, 20, -20 });
-
-	//Suelo* lado = new Suelo({ -20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
-	//lado->suelo->setGlobalPose({ -20, 20, 0 });
-
-	//Suelo* lado2 = new Suelo({ 20, 20, -20 }, { 1, 30, 30, 1 }, gScene, gPhysics);
-	//lado2->suelo->setGlobalPose({ 20, 20, 0 });
-
-	//Suelo* enfrente2 = new Suelo({ -20, 20, -20 }, { 20, 30, 1, 1 }, gScene, gPhysics);
-	//enfrente2->suelo->setGlobalPose({ 0, 20, 20 });
-
-	//GetCamera()->handleAnalogMove(0,0);
-
-
-	//suelos
-	// 
-	// 
 	
-	for (int i = 0; i < 50; ++i) {
-
-		Suelo* Parela = new Suelo({(float) i * 70,1,(float)i *70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.7,0.7,0.1 ,0.5 });
-		s.push_back(Parela);
-	}
-	//el de abajo con viento
-	for (int i = 50; i < 60; ++i) {
-
-		Suelo* Parela = new Suelo({ (float)i * 70,-40,(float)i * 70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.2,0.2,0.1 ,0.5 });
-		s.push_back(Parela);
-	}
-	for (int i = 60; i < 120; ++i) {
-
-		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.7,0.7,0.1 ,0.5 });
-		s.push_back(Parela);
-	}
-	//lateral derecha
-	for (int i = 120; i < 150; ++i) {
-		Suelo* Parela = new Suelo({ (float)i*70,0,(float)i*70 }, { 70,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
-		s.push_back(Parela);
-	}
-	//lateral izquierda
-	for (int i = 150; i < 180; ++i) {
-		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 10,100,70,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
-		s.push_back(Parela);
-	}
-	//lateral derechas
-	for (int i = 180; i < 210; ++i) {
-		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 70,100,10,1 }, gScene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
-		s.push_back(Parela);
-	}
-	//el de abajo con viento
-		for (int i = 210; i < 260; ++i) {
-
-			Suelo* Parela = new Suelo({ (float)i * 70,-40,(float)i * 70 }, { 70,1,70,1 }, gScene, gPhysics, { 0.2,0.2,0.1 ,0.5 });
-			s.push_back(Parela);
-		}
+	
+	
 
 	}
 
@@ -175,10 +118,7 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
-	auto x = s.begin();
-		/*while (x != s.end()) {
-			delete(*x);
-		}*/
+
 	delete(p);
 	}
 
@@ -207,9 +147,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
-	/*const string a = actor1->getName();
-	const string b = actor2->getName();
-	std::cout << a << std::endl;*/
+
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
 	

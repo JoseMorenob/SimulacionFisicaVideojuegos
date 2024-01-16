@@ -5,6 +5,7 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	_gravity = g;
 	createFireworkSystem();
 	Vector3 g5(0, -200.8, 0);
+#pragma region generadores de fuerzas
 	gr = new GravityForceGenerator(g5);
 	force_registry = new ParticleForceRegistry();
 	fg.push_back(gr);
@@ -12,30 +13,60 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	fg.push_back(new GravityForceGenerator(g5));
 	g5 = Vector3(0, 0, 500);
 	fg.push_back(new GravityForceGenerator(g5));
-								//Vector3 f, Vector3 ini_pos, Vector3 tam, const float k1, const float k2
-	wf = new WindForceGenerator(Vector3(-100,80,-100),Vector3(50*70,0,50*70),Vector3(70*10,100,70*10),20,0);
+	wf = new WindForceGenerator(Vector3(-100, 80, -100), Vector3(50 * 70, 0, 50 * 70), Vector3(70 * 10, 100, 70 * 10), 20, 0);
 
-	                                  //Vector3 f, Vector3 ini_pos, Vector3 tam, const float k1, const float k2
-	                                  //Vector3 f, Vector3 ini_pos, Vector3 tam, const float k1, const float k2
-	tg = new TorbellinoForceGenerator({ 0.0f,0.0f,0.0f },{0,0,0},{0,0,0},1.0,0);
-	
-	rozamiento = new WindForceGenerator(Vector3(-20,-20,-20),Vector3(0,0,0),Vector3(INT_MAX,INT_MAX,INT_MAX),10,0);
-	
-	izquierdas= new WindForceGenerator(Vector3(90,60,70), Vector3(120 * 70, 100, 120 * 70), Vector3((float)30 * 10, 100, 30 * 10), 60, 0);
-	derechas= new WindForceGenerator(Vector3(70, 80, 90), Vector3(150 * 70 + 800, 0, 150 * 70 + 800), Vector3((float)300 * 10, 500, 300 * 10), 60, 0);
-	izquierdas2 = new WindForceGenerator(Vector3(90, 80, 70), Vector3(180 * 70+2000, 0, 180 * 70+2000), Vector3((float)30 * 10, 500, 30 * 10), 60, 0);
-	seno = new SinusoidalForceGenerator(2000,900,50);
-//	pruebas = PxTransform(Vector3(150 * 70 + 1500, 0, 150 * 70 + 1500));
-////	reset = new ResetForceGenerator({ 10,10,10 });
-//	new RenderItem(CreateShape(PxBoxGeometry(300 * 10, 500, 300 * 10)), &pruebas, { 0.2,0.2,0.2,1 });
-	//Vector3 centre(0, 0, 0);
+	tg = new TorbellinoForceGenerator({ 0.0f,0.0f,0.0f }, { 0,0,0 }, { 0,0,0 }, 1.0, 0);
+	rozamiento = new WindForceGenerator(Vector3(-20, -20, -20), Vector3(0, 0, 0), Vector3(INT_MAX, INT_MAX, INT_MAX), 10, 0);
+	izquierdas = new WindForceGenerator(Vector3(90, 60, 70), Vector3(120 * 70, 100, 120 * 70), Vector3((float)30 * 10, 100, 30 * 10), 60, 0);
+	derechas = new WindForceGenerator(Vector3(70, 80, 90), Vector3(150 * 70 + 800, 0, 150 * 70 + 800), Vector3((float)300 * 10, 500, 300 * 10), 60, 0);
+	izquierdas2 = new WindForceGenerator(Vector3(90, 80, 70), Vector3(180 * 70 + 2000, 0, 180 * 70 + 2000), Vector3((float)30 * 10, 500, 30 * 10), 60, 0);
+	//seno = new SinusoidalForceGenerator(2000, 900, 50);
+
 	fg.push_back(wf);
 	fg.push_back(tg);
 	fg.push_back(izquierdas);
 	fg.push_back(rozamiento);
-	fg.push_back(seno);
-	
 
+#pragma endregion
+#pragma region suelo
+	for (int i = 0; i < 50; ++i) {
+
+		Suelo* Parela = new Suelo({ (float)i * 70,1,(float)i * 70 }, { 70,1,70,1 }, scene, gPhysics, { 0.7,0.7,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+	//el de abajo con viento
+	for (int i = 50; i < 60; ++i) {
+
+		Suelo* Parela = new Suelo({ (float)i * 70,-40,(float)i * 70 }, { 70,1,70,1 }, scene, gPhysics, { 0.2,0.2,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+	for (int i = 60; i < 120; ++i) {
+
+		Suelo* Parela = new Suelo({ (float)i * 70,100,(float)i * 70 }, { 70,1,70,1 }, scene, gPhysics, { 0.7,0.7,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+	//lateral derecha
+	for (int i = 120; i < 150; ++i) {
+		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 70,100,10,1 }, scene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		s.push_back(Parela);
+	}
+	//lateral izquierda
+	for (int i = 150; i < 180; ++i) {
+		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 10,100,70,1 }, scene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		s.push_back(Parela);
+	}
+	//lateral derechas
+	for (int i = 180; i < 210; ++i) {
+		Suelo* Parela = new Suelo({ (float)i * 70,0,(float)i * 70 }, { 70,100,10,1 }, scene, gPhysics, { 0.9,0.8,0.4 ,0.5 });
+		s.push_back(Parela);
+	}
+	//el de abajo con viento
+	for (int i = 210; i < 260; ++i) {
+
+		Suelo* Parela = new Suelo({ (float)i * 70,-40,(float)i * 70 }, { 70,1,70,1 }, scene, gPhysics, { 0.2,0.2,0.1 ,0.5 });
+		s.push_back(Parela);
+	}
+#pragma endregion
 #pragma region ParticulasExplosion
 
 	//generamos particulas para luego la explosion
@@ -58,14 +89,11 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 			float x = centre.x + randomRadius * sin(theta) * cos(phi);
 			float y = centre.y + randomRadius * sin(theta) * sin(phi);
 			float z = centre.z + randomRadius * cos(theta);
-
 			// Dirección fija para mantenerse quietas
 			Vector3 direction(0.0f, 0.0f, 0.0f);
-
 			// Crear la partícula y añadirla al contenedor
 			Particle* newParticle = new Firework(Vector3(x, y, z), direction, _gravity, 2, Vector4{ 0.4f, 0.3f, 0.4f, 1.0f }, 0, scene, gPhysics, 15);
 			newParticle->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, true);//QUITAR GRAVEDAD
-		
 			newParticle->GetPxRigidDynamic()->addForce(PxVec3(0.0f, 0.0f, 0.0f));
 			newParticle->GetPxRigidDynamic()->setLinearVelocity(PxVec3(0.0f, 0.0f, 0.0f));
 			newParticle->setDuration(999);
@@ -74,10 +102,8 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 		}
 		t++;
 	}
-	
-	//_firework_generator = new ParticleGenerator();
-#pragma endregion ParticulasExplosion
 
+#pragma endregion 
 #pragma region Player
 	resetPosition = { 10,2.0,0.0 };
 	player = new Player(Vector3{ 10,2.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 5, scene, gPhysics, g2, this);
@@ -89,16 +115,12 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 	force_registry->addRegistry(derechas, player);
 	force_registry->addRegistry(izquierdas2, player);
 	force_registry->addRegistry(rozamiento, player);
-#pragma endregion Player
+#pragma endregion 
 #pragma region Muelles
 	for (int i = 20; i < 300; i += 10) {
 		generateSpringDemo({(float)i*10+120,(float)1,(float)10*i},{ (float)i*10,(float)1,(float)i*10+120});
 	}
 #pragma endregion
-
-
-	
-
 }
 void  ParticleSystem::checkExpl0sion() {
 	physx::PxTransform playerTransform = player->GetPxRigidDynamic()->getGlobalPose();
@@ -111,28 +133,24 @@ void  ParticleSystem::checkExpl0sion() {
 			pow(playerPosition.y - particlePosition.y, 2) +
 			pow(playerPosition.z - particlePosition.z, 2));
 		
-		// Comprobar si la distancia es menor a 10
+		// Comprobar si la distancia es menor a 200
 		if (distance < 200.0f) {
 			//explosion();
 			for (int j =0; j < 15  ; ++j) {
 				if (vs[i][j] != nullptr) {
 					auto d = vs[i][j];
 					d->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);//QUITAR GRAVEDAD
-					force_registry->addRegistry(seno, d);
+					d->setDuration(3);
+					force_registry->addRegistry(exp[i], d);
 					vs[i][j] = nullptr;
 				}
-				
-
 			}
-			
-
 		}
-
 	}
 }
 void ParticleSystem::movePlayer() {
-	//splayer->SetLinearVelocity({ player->GetPxRigidDynamic()->getLinearVelocity().x + 20, player->GetPxRigidDynamic()->getLinearVelocity().y, player->GetPxRigidDynamic()->getLinearVelocity().z });
-	if (player->GetPxRigidDynamic()->getLinearVelocity().x<500 && player->GetPxRigidDynamic()->getLinearVelocity().z<500) {
+	
+	if (player->GetPxRigidDynamic()->getLinearVelocity().x<400 && player->GetPxRigidDynamic()->getLinearVelocity().z<400) {
 		player->SetLinearVelocity({ player->GetPxRigidDynamic()->getLinearVelocity().x + 80, player->GetPxRigidDynamic()->getLinearVelocity().y, player->GetPxRigidDynamic()->getLinearVelocity().z + 80 });
 	}
 	
@@ -182,16 +200,15 @@ ParticleSystem::~ParticleSystem() {
 		delete(sd);
 	
 	}
-}
-void ParticleSystem::explosion() {
-	for (auto c : exp) {
-		for (auto d : explosion_parts) {
-			d->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);
-			force_registry->addRegistry(c, d);
-		}
-	}
-	
+	auto delete_ = s.begin();
+	while (delete_ != s.end()) {
 
+		Suelo* suelito = *delete_;
+		++delete_;
+	
+		delete(suelito);
+
+	}
 }
 void ParticleSystem::update(double t) {
 	auto c = _particles.begin();
@@ -206,7 +223,6 @@ void ParticleSystem::update(double t) {
 		auto v = c;
 		++c;
 		bool finish=(*v)->integrate(t);
-		//std::cout << (*v)->gettimer() << "\n";
 			if ((*v)->_type == 5) {
 				static_cast<Player*>(*v)->integrate(t);
 				if ((*v)->GetPos().y < -120) {
@@ -338,7 +354,6 @@ void ParticleSystem::generateFirework(unsigned firework_type) {
 
 
 }
-
 void ParticleSystem::Torbelline() {
 
 	Particle* p = new Particle(Vector3{ 10,30.0,0.0 }, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0, scene, gPhysics,2);
@@ -434,9 +449,6 @@ void ParticleSystem::generateDinamic() {
 
 void ParticleSystem::generateSpringDemo(Vector3 pos1,Vector3 pos2) {
 
-	// First one standard spring uniting 2 particles
-				//10.0, 10.0, 0.0 3, (0.0, 0.0, 0.0 3, (0.0, 0.0, 0.0 3, 0.85, 60)
-								//Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color,int c
 	Particle* pl = new Particle(pos1, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,4);
 
 	Particle * p2 = new Particle(pos2, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,4);
@@ -459,10 +471,6 @@ void ParticleSystem::generateSpringDemo(Vector3 pos1,Vector3 pos2) {
 	WindForceGenerator* wind = new WindForceGenerator(Vector3(0,500,0),{0,-30,0},{100,60,300},0.5,0);
 	pl->setDuration(999999);
 	p2->setDuration(999999);
-	/*pl->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
-	p2->GetPxRigidDynamic()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);*/
-	//force_registry->addRegistry(wind, pl);
-	//force_registry->addRegistry(wind, p2);
 	force_registry->addRegistry(fg[2], p2);
 	force_registry->addRegistry(fg[1], pl);
 	fg.push_back(wind);

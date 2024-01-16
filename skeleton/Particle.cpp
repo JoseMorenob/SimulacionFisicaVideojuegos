@@ -15,7 +15,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 co
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, PxScene* scene, PxPhysics* gPhysics, int size) : masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(scene), gPhysics(gPhysics), currentTransform(Pos) {
     this->scene = scene;
     this->gPhysics = gPhysics;
-    std::cout << size << std::endl;
+
     CreateRigidDynamic(size, Pos, color);
     save = rigidDynamic;
 }
@@ -23,7 +23,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 co
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 aceler, int mas, Vector4 color, int c, physx::PxGeometry GEO, PxScene* scene, PxPhysics* gPhysics, int size) : masa(mas), ac(aceler), force(Vector3(0, 0, 0)), _type(c), vel(Vel), color(color), scene(scene), gPhysics(gPhysics), currentTransform(Pos) {
     this->scene = scene;
     this->gPhysics = gPhysics;
-    std::cout << size << std::endl;
+
     CreateRigidDynamic(size, Pos, color);
     save = rigidDynamic;
 }
@@ -38,6 +38,7 @@ void Particle::CreateRigidDynamic(int size, Vector3 Pos, Vector4 color) {
     rigidDynamic->attachShape(*shape_ad);
 
     PxRigidBodyExt::updateMassAndInertia(*rigidDynamic, 0.15);
+    if(size==15)  PxRigidBodyExt::updateMassAndInertia(*rigidDynamic, 0.3);
     scene->addActor(*rigidDynamic);
     // Pintar actor dinámico
 
