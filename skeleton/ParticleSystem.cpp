@@ -97,6 +97,7 @@ ParticleSystem::ParticleSystem( PxScene* scene, PxPhysics* gPhysics, const Vecto
 			newParticle->GetPxRigidDynamic()->addForce(PxVec3(0.0f, 0.0f, 0.0f));
 			newParticle->GetPxRigidDynamic()->setLinearVelocity(PxVec3(0.0f, 0.0f, 0.0f));
 			newParticle->setDuration(999);
+			newParticle->GetPxRigidDynamic()->setMassSpaceInertiaTensor({ 1,0,1 });
 			_particles.push_back(newParticle);
 			vs[t][j] = newParticle;
 		}
@@ -227,7 +228,7 @@ void ParticleSystem::update(double t) {
 				static_cast<Player*>(*v)->integrate(t);
 				if ((*v)->GetPos().y < -120) {
 					(*v)->GetPxRigidDynamic()->setGlobalPose(PxTransform(resetPosition));
-					(*v)->GetPxRigidDynamic()->setLinearVelocity({ 0,5,0 });
+					(*v)->GetPxRigidDynamic()->setLinearVelocity({ 0,0,0 });
 					(*v)->GetPxRigidDynamic()->setAngularVelocity({ 0,0,0 });
 				}
 				physx::PxVec3 currentLinearVelocity = (*v)->GetPxRigidDynamic()->getLinearVelocity();
@@ -446,13 +447,14 @@ void ParticleSystem::generateDinamic() {
 	//d->setLinearVel(randomDirection);
 	_particles.push_back(p);
 }
-
 void ParticleSystem::generateSpringDemo(Vector3 pos1,Vector3 pos2) {
 
 	Particle* pl = new Particle(pos1, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,4);
 
 	Particle * p2 = new Particle(pos2, Vector3{ 0.0, 0.0, 0.0 }, Vector3{ 0.0, 0.0, 0.0 }, 1, Vector4{ 0.4, 0.4, 0.4,0.3 }, 0,scene,gPhysics,4);
 	
+	pl->GetPxRigidDynamic()->setMassSpaceInertiaTensor({0,1,0});
+	p2->GetPxRigidDynamic()->setMassSpaceInertiaTensor({ 0,1,0 });
 	SpringForceGenerator * f1 = new SpringForceGenerator(40, 1, p2);
 	force_registry->addRegistry(f1, pl);
 
